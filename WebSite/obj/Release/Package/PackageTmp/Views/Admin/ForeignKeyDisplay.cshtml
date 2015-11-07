@@ -1,0 +1,39 @@
+﻿@model Plenum.WebSite.Models.ForeignKeyUIModel
+
+@{
+    
+    
+}
+
+<div class="editor-field">
+@if (Model.ReadOnly)
+{
+    <span>@Model.TextValue</span>
+    <input type="hidden" id="@Model.Name" name="@Model.Name" value="@Model.Value" />
+}
+else
+{
+    if (Model.Collection != null)
+    {    
+        <select name="@Model.Name" style="width: 200px;" >
+            <option value="">--Seleccione--</option>
+            @foreach (var item in @Model.Collection)
+            {
+                if (Model.Value != null && item.ID == Model.Value)
+                {
+                    <option value="@item.ID" selected="selected">@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.ID">@item.Name</option>       
+                }
+            
+            }
+        </select>
+    }else
+    {
+        <input type="text" name="@Model.Name" value="@Model.Value" />
+    }
+}
+
+</div>

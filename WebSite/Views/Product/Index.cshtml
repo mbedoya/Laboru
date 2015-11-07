@@ -1,0 +1,178 @@
+﻿@model Plenum.WebSite.Models.ProductModelUI
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.Product.Name - Pets & Pets</title>
+    @Styles.Render("~/Content/css/mascotia.css")
+</head>
+<body>
+    <div>
+        <div id="page_wrapper">
+
+            <div id="page_header">
+
+                <h1><a href="/">Pets & Pets</a></h1>
+                <h2>Amor, Nutrición y Bienestar Animal</h2>
+
+            </div>
+
+            <div id="menu_bar">
+                <ul>
+                    <li><a href="#">Nutrición</a></li>
+                    <li><a href="#">Bienestar</a></li>
+                    <li><a href="#">Diversión</a></li>
+                </ul>
+            </div>
+
+            <div id="content_wrapper">
+
+                <div id="left_side">
+
+                    <h3>@Model.Product.Name</h3>                    
+
+                    <table>                        
+                            <tr>                            
+                            <td>                                
+                                <img src="@Model.Product.MainImage" class="float_right" alt="@Model.Product.Name" />
+                            </td>
+                            <td>
+                                <p>
+                                   assentior usu, viderer 
+            accusamus elaboraret te quo, usu at quas mutat. <a href="#">At vivendum adipiscing nec</a>, nec sale pericula ullamcorper 
+            ea. Veritus adolescens expetendis vim at, tollit scripta usu eu. 
+            Sea debet commune iracundia in. Sea no posse corrumpit, te elit 
+            aperiri forensibus nam.Diam persequeris has ut. <br /><br />
+                                    <a href="#">$ @Model.Product.SalePrice</a><br />
+                                    
+                                    <input id="btnBuyOnline" type="button" value="Comprar" />
+                                </p>
+                            </td>
+                        </tr>
+                        
+                    </table>
+
+                    <br />
+                    <p>
+                        <b>En dónde lo puedes ver?</b>
+                    </p>  
+                    @if (Model.Stores != null && Model.Stores.Count > 0)
+                    {
+                        <ul class="big_arrow_list">
+                            @foreach (var item in Model.Stores)
+                            {
+                                <li>
+                                    @item.Name<br />
+                                    <p>@item.Address</p>                                    
+                                </li>                                
+                            }                    
+                        </ul>    
+                    }else{
+                      <p>No se encuentra disponible en ninguna tienda.</p>   
+                    }
+
+                </div>
+
+                <div id="right_side">
+
+                    <h3>¿Quiénes somos?</h3>
+
+                    <p>
+                        Per noster accusata <a href="#">mandamus</a> an, facer partem definitionem 
+eam ea. Vix inermis repudiare in, <a href="#">deleniti</a> maluisset 
+rationibus sea te. Vis ne sale partiendo persequeris. Vis ei autem reformidans 
+conclusionemque.
+                    </p>
+
+                    <h3>Lo más vendido</h3>
+
+                    <ul class="arrow_list">
+                        <li><a href="#">Item one</a></li>
+                        <li><a href="#">Item two</a></li>
+                        <li><a href="#">Item three</a></li>
+                        <li><a href="#">Item four</a></li>
+                        <li><a href="#">Item five</a></li>
+                    </ul>
+
+                    <p>
+                        <a href="#">Per noster accusata mandamus</a> an, facer partem definitionem 
+eam ea. Vix inermis repudiare in, deleniti maluisset rationibus sea te. Vis 
+ne sale partiendo persequeris. Vis ei autem <a href="#">reformidans</a>
+                        conclusionemque. 
+                    </p>
+
+                    <h3>Trabaja con Nosotros</h3>
+
+                    <p>
+                        Prodesset reprimique pri ut, in elitr debitis persecuti sit, dolores 
+propriae suscipiantur pri ad. <a href="#">Melius nonummy facilis</a>
+                        per no. Duo et adipisci vituperata, mea semper nusquam mediocritatem at, 
+eos saperet vulputate ullamcorper te. Aperiam legendos ut eos, et sit 
+inani propriae iudicabit, ea iusto habemus volumus.
+                    </p>
+
+                </div>
+
+                <div id="spacer"></div>
+
+            </div>
+
+            <div id="page_footer">
+
+                <p>
+                    &copy; 2014 innovarme, Todos los derechos reservados.<br />                    
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/Scripts/jquery.js")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#btnBuyOnline").on("click", function () {
+
+                //Check email and password
+            //    $.ajax({
+            //        url: "/Admin/ManageStock/UpdateByReference",
+            //        dataType: "json",
+            //        type: "POST",
+            //        data: {
+            //            productReference: '7702026310493',
+            //            storeID: 5,
+            //            itemsToAdd: 1
+            //        },
+            //        success: function (data) {
+
+            //        },
+            //        error: function (a, b, c) {
+            //            alert("Error Adding Item");
+            //        }
+            //    })
+            //        .then(function (response) {
+
+            //            if (response.success) {
+            //                alert("Elemento Adicionado");
+            //            }
+
+            //        });
+
+            });
+
+        });
+
+    </script>
+</body>
+</html>

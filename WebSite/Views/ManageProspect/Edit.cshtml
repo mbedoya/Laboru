@@ -1,0 +1,145 @@
+@model Plenum.Models.ProspectDataModel
+
+@using System.Web.Optimization
+@using Plenum.Models
+@using Plenum.Business
+
+@{
+    Layout = null;
+    List<ProspectactivityDataModel> activity = ProspectactivityBO.GetInstance().GetProspectactivityByProspect(Convert.ToInt32(Model.ID));
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+	@Styles.Render("~/Scripts/datepick/jquery.datepick.css")
+	@Styles.Render("~/Content/css/jquery.fancybox.css")
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post" enctype="multipart/form-data">
+
+
+            <table>
+                <tr>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">@Plenum.WebSite.Globalization.PlenumResources.Name</span><br />
+                        @Model.Name
+                    </td>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">Email</span><br />
+                        @Model.Email
+                    </td>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">@Plenum.WebSite.Globalization.PlenumResources.Phone</span><br />
+                        @Model.Phone
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">@Plenum.WebSite.Globalization.PlenumResources.Address</span><br />
+                        @Model.Address
+                    </td>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">@Plenum.WebSite.Globalization.PlenumResources.Occupation</span><br />
+                        @( ProspectBO.GetInstance().IsProfession(Model.Occupation) ? "" : Plenum.Utilities.Web.Misc.Pascal(Model.Occupation) )
+                    </td>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">@Plenum.WebSite.Globalization.PlenumResources.Profession</span><br />
+                        @( ProspectBO.GetInstance().IsProfession(Model.Occupation) ? Plenum.Utilities.Web.Misc.Pascal(Model.Occupation) : "" )
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">@Plenum.WebSite.Globalization.PlenumResources.City</span><br />
+                        @Model.Location
+                    </td>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;">Id</span><br />
+                        @Model.Identificacion
+                    </td>
+                    <td style="width:250px;">
+                        <span style="font-size:11px;"@Plenum.WebSite.Globalization.PlenumResources.Company</span><br />
+                        @Model.Company
+                    </td>
+                </tr>
+            </table>
+						<input id="ID" name="ID" type="hidden" value="@Model.ID.ToString()" />    			
+						
+							
+				
+            <br />
+            <!-- <input type="submit" value="Save" /> -->
+
+
+        </form>
+
+        @if (activity != null && activity.Count > 0)
+        {
+            <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th style="width:250px;">@Plenum.WebSite.Globalization.PlenumResources.Subject</th>
+                <th style="width:250px;">@Plenum.WebSite.Globalization.PlenumResources.DataSource</th>                
+                <th style="width:250px;">@Plenum.WebSite.Globalization.PlenumResources.Comments</th>                
+            </tr>
+            
+                @foreach (var item in activity)
+                {
+                <tr>
+                    <td>@item.Subject</td>
+                    <td>@item.Event</td>                    
+                    <td>@item.Comments</td>
+                </tr>   
+                }
+
+            
+
+        </table>    
+        }
+
+        
+
+        <a class="link_button" href="javascript:history.back();" >@Plenum.WebSite.Globalization.PlenumResources.Back</a>
+
+		@Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.plugin.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.datepick.min.js")
+		@Scripts.Render("~/Scripts/jquery.fancybox.js")
+
+        <script>
+
+            $(document).ready(function () {
+
+				$('.fancybox').fancybox();
+
+				 //DatePick
+                $(function () {
+
+					                    
+                });
+
+
+                $("#editForm").validate({
+                    rules: {
+						                        
+                    },
+                    messages: {
+                                            }
+                });
+
+            });
+
+
+        </script>
+        
+    </div>
+</body>
+</html>

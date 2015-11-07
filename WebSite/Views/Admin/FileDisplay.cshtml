@@ -1,0 +1,15 @@
+﻿@model Plenum.WebSite.Models.FileUIModel
+
+@if (Model.Type == Plenum.WebSite.Models.FileUIModel.FileType.Image)
+{
+    <a class="fancybox" href="@Model.URL">
+        <img style="width:50px;height:50px" src="@Model.URL" />
+    </a>    
+}
+else
+{
+    if (Model.Type == Plenum.WebSite.Models.FileUIModel.FileType.File)
+    {
+        <a href="@Model.URL" style="width:30px;height:30px;" target="_blank"><img style="width:30px;height:30px;" src="/content/img/attachment.png" /></a>
+    }    
+}

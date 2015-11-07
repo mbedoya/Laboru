@@ -1,0 +1,10 @@
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\bin\Release\Laboru.Data.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\bin\Release\Laboru.Data.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\bin\Release\Laboru.Models.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\bin\Release\Plenum.Data.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\bin\Release\Plenum.Models.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\bin\Release\Plenum.Utilities.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\bin\Release\Laboru.Models.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\obj\Release\Laboru.Data.csprojResolveAssemblyReference.cache
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\obj\Release\Laboru.Data.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Data\obj\Release\Laboru.Data.pdb

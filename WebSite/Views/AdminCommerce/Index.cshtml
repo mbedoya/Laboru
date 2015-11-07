@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page title -->
+<div id="pageTitle" class="content2-pagetitle">Commerce</div>
+
+<iframe id="pageIframe" style="width:95%;border:solid 0px; height:550px; margin-left:20px;" src=""></iframe>
+
+@section left_body{
+    
+    <ul class="options">
+        <li class="title">Orders from customers</li>
+        <li class="group"><a href="#">Pre-Orders (20)</a></li>
+        <li class="group"><a href="#">Open</a></li>
+        <li class="group"><a href="#">Closed</a></li>        
+    </ul>
+
+    <ul class="options">
+        <li class="title">Orders to Providers</li>
+        <li class="group"><a href="#">Open</a></li>
+        <li class="group"><a href="#">Closed</a></li>        
+    </ul>
+
+    <ul class="options">
+        <li class="title">Products</li>
+        <li class="group"><a id="optionProducts" href="#">Products</a></li>
+        <li class="group"><a id="optionStock" href="#">Stock</a></li>
+        <li class="group"><a id="optionStores" href="#">Stores</a></li>        
+    </ul>
+
+    <ul class="options">
+        <li class="title">Customers</li>
+        <li class="group"><a href="#">Customers</a></li>
+        <li class="group"><a href="#">Prospects</a></li>        
+    </ul>
+    
+    <ul class="options">
+        <li class="title">Providers & Brands</li>        
+        <li class="group"><a id="optionBrands" href="#">Brands</a></li>
+        <li class="group"><a id="optionProviders" href="#">Providers</a></li>
+    </ul>    
+
+    <ul class="options">
+        <li class="title">Financial Statement</li>
+        <li class="group"><a href="#">Reports</a></li>        
+    </ul>
+
+    <ul class="options">
+        <li class="title">Logistics</li>
+        <li class="group"><a href="#">Delivery Instructions</a></li>        
+    </ul>
+}
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#optionProducts").on("click", function () {
+                $("#pageTitle").html("Products");
+                $("#pageIframe").attr("src", "/admin/manageproduct");
+            });
+
+            $("#optionNewProducts").on("click", function () {
+                $("#pageTitle").html("New Products");
+                $("#pageIframe").attr("src", "/admin/managenewproduct");
+            });            
+
+            $("#optionStock").on("click", function () {
+                $("#pageTitle").html("Stock");
+                $("#pageIframe").attr("src", "/admin/managestock");
+            });
+
+            $("#optionStores").on("click", function () {
+                $("#pageTitle").html("Stores");
+                $("#pageIframe").attr("src", "/admin/managestore");
+            });
+
+            $("#optionBrands").on("click", function () {
+                $("#pageTitle").html("Brands");
+                $("#pageIframe").attr("src", "/admin/managebrand");
+            });
+
+            $("#optionProviders").on("click", function () {
+                $("#pageTitle").html("Providers");
+                $("#pageIframe").attr("src", "/admin/manageprovider");
+            });           
+        });
+
+    </script>
+
+}

@@ -1,0 +1,151 @@
+﻿@model Plenum.WebSite.Models.FieldUIModel
+
+@{
+    string value = "";
+    if(Model.Type.ToLower() == "date"){
+        if(Convert.ToDateTime(Model.Value) != DateTime.MinValue)
+        {
+            value = Convert.ToDateTime(Model.Value).ToString("dd/MM/yyyy");    
+        }else{
+            value = "";   
+        }        
+    }else{
+        value = Model.Value == null ? "" : Model.Value.ToString();    
+    }
+
+    string tableName = "table" + Model.Name;
+
+    int size = 20;
+    if (Model.Size > 0)
+    {
+        size = Model.Size;
+    }
+
+    string read_only = "";
+    if (Model.Options.ToLower().Contains("readonly"))
+    {
+        read_only = "readonly";
+    }
+
+    bool isPassword = Model.Options.ToLower().Contains("password");
+
+    bool isFile = Model.Options.ToLower().Contains("file");
+    string name = Model.Name;
+    if(isFile){
+        name = "File" + name;
+    } 
+}
+
+@if (isFile)
+{
+    <div>
+        <input id="@name" name="@name" type="file" />
+        <input id="@Model.Name" name="@Model.Name" type="hidden" value="@value" />
+        @{ Html.RenderAction("FileDisplay", "Admin", new { url = value }); }
+    </div>
+}
+else
+{
+    if (isPassword)
+    {
+        <input id="@Model.Name" name="@Model.Name" type="password" value="@value" maxlength="@size" @read_only />    
+    }
+    else
+    {
+        if (Model.Type.ToLower() == "date")
+        {
+            <input class="plenum_date" id="@Model.Name" name="@Model.Name" type="text" value="@value" maxlength="10" @read_only />
+        }
+        else
+        {
+            if (Model.Type.ToLower() == "string")
+            {
+                <input id="@Model.Name" name="@Model.Name" type="text" value="@value" maxlength="255" @read_only />
+            }
+            else
+            {
+                if (Model.Type.ToLower() == "longstring")
+                {
+                    <textarea id="@Model.Name" name="@Model.Name" rows="8" cols="60" maxlength="@size" @read_only>@value</textarea>
+                }
+                else
+                {
+                    if (Model.Type.ToLower() == "xmlstring")
+                    {
+                        <textarea class="ckeditor" id="@Model.Name" name="@Model.Name" maxlength="@size" @read_only>@if(value != null){ @value; }</textarea>                    
+                    }
+                    else
+                    {
+                        if (Model.Type.ToLower() == "int" || Model.Type.ToLower() == "double")
+                        {
+                            <input id="@Model.Name" name="@Model.Name" type="text" value="@value" maxlength="8" @read_only/>
+                        }
+                        else
+                        {
+                            if (Model.Type.ToLower() == "reference")
+                            {
+                                <input id="@Model.Name" name="@Model.Name" type="text" value="@value" readonly/>
+                                <input data="@Model.Name" data-type="r" class="plenum_reference_button" type="button" value="..." />
+                            }
+                            else
+                            {
+                            
+                                if (Model.Type.ToLower() == "file")
+                                {
+                                    <input id="@Model.Name" name="@Model.Name" type="text" value="@value" readonly/>
+                                    <input data="@Model.Name" data-type="f" class="plenum_file_button" type="button" value="..." />
+                                }
+                                else
+                                {
+                                    if (Model.Type.ToLower() == "referencelist")
+                                    {
+                                        <table id='@tableName'>
+                                            <tbody>
+                                                @{
+                                                    List<Plenum.Models.BaseDataModel> references = (List<Plenum.Models.BaseDataModel>)Model.Value;
+                                                    string commaSeparatedValues = "";
+                                                    foreach (var item in references)
+                                                    {
+                                                        commaSeparatedValues = commaSeparatedValues + item.ID.ToString() + ";";
+                                                    }
+                                                }
+                                                @foreach (var item in references)
+                                                {
+                                                    <tr id="row_rl_@Model.Name@item.ID.ToString()">
+                                                        <td style="width:300px">                                                        
+                                                            @(item.Name + " {" + item.ID.ToString() + "}" )
+                                                        </td>
+                                                        <td>
+                                                            <a data-name="@Model.Name" data-id="@item.ID.ToString()" class="delete_plenum_reference" href="#">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>                                        
+                                        </table>
+    
+                                        <input id="@Model.Name" name="@Model.Name" value="@commaSeparatedValues"  type="hidden" />
+                                    
+                                        <input data="@Model.Name" data-type="rl" class="plenum_reference_button" type="button" style="width:100px !important;" value="Add" />
+                                    }
+                                    else
+                                    {
+                                        if (Model.Type.ToLower() == "boolean")
+                                        {   
+                                            <input id="@Model.Name" name="@Model.Name" type="checkbox" @( value=="on"? "checked" : "" ) />
+    
+                                        }else{
+                                            <input id="@Model.Name" name="@Model.Name" type="text" value="@value" maxlength="@size" @read_only />
+                                        }
+                                    }
+                                }
+                            
+                            }
+                    }                   
+                    
+                }               
+                
+            }
+        }
+    }
+}
+}

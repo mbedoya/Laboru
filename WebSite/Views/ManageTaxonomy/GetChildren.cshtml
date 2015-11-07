@@ -1,0 +1,42 @@
+@model Plenum.WebSite.Models.ElementTreeModelUI
+
+@if (Model.Parents)
+{
+    <ul>
+        <li id="0" data-jstree='{"opened":true}' class="cmenu1" >Taxonomy
+            @if (Model.Elements != null && Model.Elements.Count > 0)
+                {
+                    foreach (var item in Model.Elements)
+                    {
+                        <ul>
+                            @if (Model.SelectedElements != null && Model.SelectedElements.Count > 0 && Model.SelectedElements.Exists( x => x.ID == item.ID))
+                            {
+                                    <li class="jstree-closed" id="@item.ID" data-jstree='@("{\"icon\":\"/content/img/icon_document.gif\", \"selected\":true}" )'>@item.Name</li>
+                            }else
+                            {
+                                <li class="jstree-closed" id="@item.ID" data-jstree='@("{\"icon\":\"/content/img/icon_document.gif\"}" )'>@item.Name</li>
+                            }
+                        </ul>
+                    }
+                } 
+        </li>
+    </ul>
+}else{
+    if (Model.Elements != null && Model.Elements.Count > 0)
+    {
+        foreach (var item in Model.Elements)
+        {
+            <ul>
+                @if (Model.SelectedElements != null && Model.SelectedElements.Count > 0 && Model.SelectedElements.Exists( x => x.ID == item.ID))
+                {
+                     <li class="jstree-closed" id="@item.ID" data-jstree='@("{\"icon\":\"/content/img/icon_document.gif\", \"selected\":true}" )'>@item.Name</li>
+                }else
+                {
+                    <li class="jstree-closed" id="@item.ID" data-jstree='@("{\"icon\":\"/content/img/icon_document.gif\"}" )'>@item.Name</li>
+                }                
+            </ul>
+        }
+    }else{
+         <ul></ul>
+     }
+}

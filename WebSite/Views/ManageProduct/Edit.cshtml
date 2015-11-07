@@ -1,0 +1,282 @@
+@model Plenum.Models.ProductDataModel
+
+@using System.Web.Optimization
+@using Plenum.Models
+@using Plenum.Business
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+    @Styles.Render("~/Scripts/datepick/jquery.datepick.css")
+    @Styles.Render("~/Content/css/jquery.fancybox.css")
+    @Styles.Render("~/Content/css/jspkg-tabs/tabs.css")
+    @Styles.Render("~/Scripts/jstree/themes/default/style.min.css")
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post" enctype="multipart/form-data">
+
+            <div id="tab-container" class="tab-container">
+                <ul class='etabs'>
+                    <li class='tab'><a href="#page-main">MAIN</a></li>
+                    <li class='tab'><a href="#page-variations">VARIATIONS</a></li>
+                    <li class='tab'><a href="#page-taxonomies">TAXONOMIES</a></li>
+                </ul>
+                <div class="ficha" id="page-main">
+
+                    <table>
+                        <tr>
+                            <td>
+                                <input id="ID" name="ID" type="hidden" value="@Model.ID.ToString()" />
+                                Name<br />
+                                @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Name", value = Model.Name, type = "text", size = 50, options = "" }); }
+                                <br />
+
+                                <div class="field_details">
+                                    50 characters
+                                </div>
+                                <br />
+                            </td>
+                            <td>Variant<br />
+                                @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Variant", value = Model.Variant, type = "text", size = 50, options = "" }); }
+                                <br />
+
+                                <div class="field_details">
+                                    50 characters
+                                </div>
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CostPrice<br />
+                                @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "CostPrice", value = Model.CostPrice, type = "text", size = 0, options = "" }); }
+                                <br />
+                            </td>
+                            <td>SalePrice<br />
+                                @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "SalePrice", value = Model.SalePrice, type = "text", size = 0, options = "" }); }
+                                <br />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BrandID<br />
+
+                                @{ Html.RenderAction("ForeignKeyDisplay", "Admin", new { fieldName = "BrandID", fieldValue = @Model != null ? @Model.BrandID : 0, primaryTable = "Brand", readOnly = false, data = Plenum.Business.BrandBO.GetInstance().GetAll() }); }
+                                <br />
+                            </td>
+                            <td>ProviderID<br />
+
+                                @{ Html.RenderAction("ForeignKeyDisplay", "Admin", new { fieldName = "ProviderID", fieldValue = @Model != null ? @Model.ProviderID : 0, primaryTable = "Provider", readOnly = false, data = Plenum.Business.ProviderBO.GetInstance().GetAll() }); }
+                                <br />
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    InternalCode<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "InternalCode", value = Model.InternalCode, type = "text", size = 50, options = "provider code" }); }
+                    <br />
+
+                    <div class="field_details">
+                        50 characters
+                    </div>
+                    <br />
+                    Reference<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Reference", value = Model.Reference, type = "text", size = 50, options = "" }); }
+                    <br />
+
+                    <div class="field_details">
+                        50 characters
+                    </div>
+                    <br />
+
+                    Descripcion<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Descripcion", value = Model.Descripcion, type = "text", size = 16777215, options = "xhtml" }); }
+                    <br />
+
+                    <div class="field_details">
+                        16777215 characters
+                    </div>
+                    <br />
+                    MainImage<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "MainImage", value = Model.MainImage, type = "text", size = 100, options = "file" }); }
+                    <br />
+
+                    <div class="field_details">
+                        100 characters
+                    </div>
+                    <br />
+
+                    Tax<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Tax", value = Model.Tax, type = "text", size = 0, options = "" }); }
+                    <br />
+
+                    Options<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Options", value = Model.Options, type = "text", size = 500, options = "" }); }
+                    <br />
+
+                    <div class="field_details">
+                        500 characters
+                    </div>
+                    <br />
+                    ProductParentID<br />
+
+                    @{ Html.RenderAction("ForeignKeyDisplay", "Admin", new { fieldName = "ProductParentID", fieldValue = @Model != null ? @Model.ProductParentID : 0, primaryTable = "Product", readOnly = false, data = Plenum.Business.ProductBO.GetInstance().GetAll() }); }
+                    <br />
+
+                </div>
+
+                <div id="page-variations" class="ficha">
+
+                    @{
+                        List<ProductDataModel> variants = null;
+                        
+                        if (Model.ID != null)
+	                    {
+                            variants = ProductBO.GetInstance().GetProductByProduct(Convert.ToInt32(Model.ID));
+	                    }
+                        
+                    }
+
+                    @if (variants != null && variants.Count > 0)
+                    {
+                        <table>
+                            <tr>
+                                <th>Name
+                                </th>
+                                <th>Cost
+                                </th>
+                                <th>Sale
+                                </th>
+                            </tr>
+                            @foreach (var item in variants)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Variant
+                                    </td>
+                                    <td>
+                                        @item.CostPrice
+                                    </td>
+                                    <td>
+                                        @item.SalePrice
+                                    </td>
+                                </tr>                        
+                            }
+                        </table>
+                    }
+
+                </div>
+
+                <div id="page-taxonomies" class="ficha">
+
+                    @{
+                        List<TaxonomyDataModel> selectedTaxonomies = null;
+                        
+                        if (Model.ID != null)
+	                    {
+                            selectedTaxonomies = TaxonomyBO.GetInstance().GetSelectedByProduct(Convert.ToInt32(Model.ID));
+	                    }
+                        
+                    }
+
+                    @if (selectedTaxonomies != null && selectedTaxonomies.Count > 0)
+                    {
+                        <p>@selectedTaxonomies.Count taxonomies selected</p>
+                        <ul>
+                        @foreach (var item in selectedTaxonomies)
+                        {
+                            <li>@item.Name</li> 
+                        }
+                        </ul>
+                    }
+
+                    <div id="treeContent" style="margin: 5px;">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+            <br />
+            <input type="submit" value="Save" /> OR 
+            <input type="button" value="Cancel" />
+        </form>
+
+        @Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.plugin.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.datepick.min.js")
+        @Scripts.Render("~/Scripts/jquery.fancybox.js")
+
+        @Scripts.Render("~/Scripts/jspkg-tabs/jquery.hashchange.min.js")
+        @Scripts.Render("~/Scripts/jspkg-tabs/jquery.easytabs.min.js")
+
+        @Scripts.Render("~/Scripts/jstree/jstree.min.js")
+
+        <script>
+
+            $(document).ready(function () {
+
+                $('#tab-container').easytabs({
+                    animate: false
+                });
+                
+                var selected_node_id = null;
+
+                $('#treeContent').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                return '/Admin/ManageTaxonomy/GetChildren/?productID=@( Model.ID != null ? @Model.ID.ToString() : "" )';
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id }
+                            }
+                        }
+                    },
+                    "plugins": ["checkbox"]
+                });
+
+                $('#treeContent').on("select_node.jstree", function (e, data) {
+                    selected_node_id = data.node.id;
+                });
+
+
+                $("#editForm").validate({
+                    rules: {
+                        Name: { required: true },
+                        SalePrice: { required: true },
+                        BrandID: { required: true },
+                        ProviderID: { required: true },
+
+                    },
+                    messages: {
+                        Name: "Name is required",
+                        SalePrice: "SalePrice is required",
+                        BrandID: "BrandID is required",
+                        ProviderID: "ProviderID is required",
+                    }
+                });
+
+            });
+
+
+        </script>
+
+    </div>
+</body>
+</html>

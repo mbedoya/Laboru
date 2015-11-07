@@ -1,0 +1,183 @@
+﻿@model Plenum.WebSite.Models.AdminContentUIModel
+@using Plenum.WebSite.Globalization
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Page title -->
+<div id="pageTitle" class="content2-pagetitle">@PlenumResources.Content</div>
+
+<iframe id="pageIframe" style="width:95%;border:solid 0px; height:550px;  margin-left:20px;" src=""></iframe>
+
+@section left_body{
+
+    <p class="sidebar-maintitle">@PlenumResources.Pages</p>
+
+    <!-- Textbox -->
+    <div class="sidebar-txtbox-noshade">
+        <div id="siteContent">
+        </div>
+    </div>    
+}
+
+@section scripts{
+
+    <script>
+
+        var selected_node_id = null;
+        var selected_node_text = null;
+
+        function updateContentTree() {
+
+            var tree = $("#siteContent").jstree(true);            
+            tree.refresh();
+        }
+
+        $(document).ready(function () {
+
+            $('#siteContent').jstree({
+                'core': {
+                    'data': {
+                        'url': function (node) {
+                            return '/admin/ManagePage/GetChildren/';
+                        },
+                        'data': function (node) {
+                            return {'id': node.id}
+                        }
+                    },
+                    "check_callback" : true //This is necessary for the dnd to work
+                },                
+                "plugins": [
+                  "contextmenu", "dnd"
+                ],
+                "contextmenu": {
+                    "items": function ($node) {
+                        return {
+                            "Create": {
+                                "label": '@PlenumResources.CreatePage',
+                                "action": function (obj) {
+
+                                    if (selected_node_id == null) {
+                                        alert("Please select Parent Page");
+                                    } else {
+
+                                        if (selected_node_id == "-1") {
+                                            alert("Trash is not a valid Parent Page");
+                                        } else {
+                                            $("#pageTitle").html("@PlenumResources.CreatePage");
+                                            $("#pageIframe").attr("src", "/admin/managepage/create/?ParentID=" + selected_node_id);
+                                        }
+                                    }                                   
+
+                                }
+                            },
+                            "Rename": {
+                                "label": '@PlenumResources.Edit',
+                                "action": function (obj) {
+
+                                    if (selected_node_id == null) {
+                                        alert("Please select Page");
+                                    } else {
+
+                                        if (selected_node_id == "-1" || selected_node_id == "0") {
+                                            alert("Root and Trash are not editable");
+                                        } else {
+                                            $("#pageTitle").html("@PlenumResources.Edit " + selected_node_text);
+                                            $("#pageIframe").attr("src", "/admin/managepage/edit/?ID=" + selected_node_id);
+                                        }
+                                    }
+                                }
+                            },
+                            "Copy": {
+                                "label": "@PlenumResources.Copy",
+                                "action": function (obj) {
+
+                                    if (selected_node_id == null) {
+                                        alert("Please select Page");
+                                    } else {
+
+                                        if (selected_node_id == "-1" || selected_node_id == "0") {
+                                            alert("Root and Trash are not editable");
+                                        } else {
+                                            $("#pageTitle").html("Edit " + selected_node_text);
+                                            $("#pageIframe").attr("src", "/admin/managepage/edit/?ID=" + selected_node_id);
+                                        }
+                                    }
+                                }
+                            },
+                            "Paste": {
+                                "label": "@PlenumResources.Paste",
+                                "action": function (obj) {
+
+                                    if (selected_node_id == null) {
+                                        alert("Please select Page");
+                                    } else {
+
+                                        if (selected_node_id == "-1" || selected_node_id == "0") {
+                                            alert("Root and Trash are not editable");
+                                        } else {
+                                            $("#pageTitle").html("Edit " + selected_node_text);
+                                            $("#pageIframe").attr("src", "/admin/managepage/edit/?ID=" + selected_node_id);
+                                        }
+                                    }
+                                }
+                            },
+                            "Delete": {
+                                "label": "@PlenumResources.Delete",
+                                "action": function (obj) {
+
+                                    if (confirm('@PlenumResources.Message_DeletePageConfirmation')) {
+
+                                        //Delete Page
+                                        $.ajax({
+                                            url: "/Admin/ManagePage/Delete",
+                                            dataType: "json",
+                                            type: "POST",
+                                            data: { id: selected_node_id },
+                                            success: function (data) {
+
+                                            },
+                                            error: function (a, b, c) {
+                                                alert('@PlenumResources.Message_ErrorDeletingPage');
+                                            }
+                                        })
+                                            .then(function (response) {
+
+                                                if (response.success) {
+                                                    var tree = $("#siteContent").jstree(true);
+                                                    tree.delete_node(obj);
+                                                    tree.refresh();
+
+                                                    alert('@PlenumResources.Message_ErrorDeletingPage');                                                    
+                                                }
+
+                                            });
+                                    }
+                                    
+                                }
+                            }
+                        };
+                    }
+                }
+            });
+
+            $('#siteContent').on("select_node.jstree", function (e, data) {
+                selected_node_id = data.node.id;
+                selected_node_text = data.node.text;
+                link = $("li[id=" + data.node.id + "]").attr("link");                
+
+                $("#pageTitle").html(data.node.text);
+                $("#pageIframe").attr("src", link);
+            });
+
+            $('#siteContent').on("move_node.jstree", function (e, data) {
+                console.log(data);
+            });
+
+        });
+
+    </script>
+
+}

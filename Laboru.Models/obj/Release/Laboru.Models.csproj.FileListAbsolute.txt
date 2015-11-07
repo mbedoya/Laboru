@@ -1,0 +1,5 @@
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Models\bin\Release\Laboru.Models.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Models\bin\Release\Laboru.Models.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Models\bin\Release\Plenum.Models.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Models\obj\Release\Laboru.Models.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Models\obj\Release\Laboru.Models.pdb

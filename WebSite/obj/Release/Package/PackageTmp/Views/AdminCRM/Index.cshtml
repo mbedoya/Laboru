@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- Page title -->
+<div id="pageTitle" class="content2-pagetitle">CRM</div>
+
+<iframe id="pageIframe" style="width:95%;border:solid 0px; height:550px; margin-left:20px;" src=""></iframe>
+
+@section left_body{
+    
+    <ul class="options">      
+        <li class="title">Info</li>  
+        <li class="group"><a id="optionUsers" href="#">@Plenum.WebSite.Globalization.PlenumResources.Customers</a></li>
+        <li class="group"><a id="optionProspects" href="#">@Plenum.WebSite.Globalization.PlenumResources.Prospects</a></li>
+    </ul>    
+
+}
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#optionUsers").on("click", function () {
+                $("#pageTitle").html("@Plenum.WebSite.Globalization.PlenumResources.Customers");
+                $("#pageIframe").attr("src", "/admin/manageuser");
+            });
+
+            $("#optionProspects").on("click", function () {
+                $("#pageTitle").html("@Plenum.WebSite.Globalization.PlenumResources.Prospects");
+                $("#pageIframe").attr("src", "/admin/ManageProspect");
+            });
+            
+        });
+
+    </script>
+
+}

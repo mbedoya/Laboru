@@ -1,0 +1,79 @@
+﻿@model Plenum.WebSite.Models.ProductModelUI
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <title>@Model.Product.Name - Pets & Pets</title>
+    @Styles.Render("~/Content/css/jquery.mobile-1.4.2.min.css")
+</head>
+<body>
+
+    <div data-role="page" id="page-product" data-theme="a">
+
+        <div id="header" data-role="header">
+            <h2>Pets & Pets</h2>
+        </div>
+        <!-- /header -->
+
+        <div data-role="content">
+            <div id="breadcrumb"></div>
+            <p>@Model.Product.Name</p>
+            <img src="@Model.Product.MainImage" class="float_right" alt="@Model.Product.Name" />
+
+            <p>
+                                   assentior usu, viderer 
+            accusamus elaboraret te quo, usu at quas mutat. <a href="#">At vivendum adipiscing nec</a>, nec sale pericula ullamcorper 
+            ea. Veritus adolescens expetendis vim at, tollit scripta usu eu. 
+            Sea debet commune iracundia in. Sea no posse corrumpit, te elit 
+            aperiri forensibus nam.Diam persequeris has ut. <br /><br />
+                                    <a href="#">$ @Model.Product.SalePrice</a><br />
+                                    
+                                    <input id="btnBuyOnline" type="button" value="Comprar" />
+                                </p>
+
+            <br />
+            <p>
+                <b>En dónde lo puedes ver?</b>
+            </p>
+            @if (Model.Stores != null && Model.Stores.Count > 0)
+            {
+                <ul class="big_arrow_list">
+                    @foreach (var item in Model.Stores)
+                    {
+                        <li>
+                            @item.Name<br />
+                            <p>@item.Address</p>
+                        </li>                                
+                    }
+                </ul>    
+            }
+            else
+            {
+                <p>No se encuentra disponible en ninguna tienda.</p>   
+            }
+
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h3>Todos los derechos reservados - Innovarme</h3>
+        </div>
+        <!-- /footer -->
+
+    </div>
+    <!-- /product -->
+
+
+    @Scripts.Render("~/Scripts/jquery.js")
+    @Scripts.Render("~/Scripts/jquery.mobile-1.4.2.js")
+
+    
+</body>
+</html>

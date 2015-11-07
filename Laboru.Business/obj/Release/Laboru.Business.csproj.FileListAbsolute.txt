@@ -1,0 +1,10 @@
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Release\Laboru.Business.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Release\Laboru.Business.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Release\Laboru.Data.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Release\Laboru.Models.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Release\Plenum.Models.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Release\Laboru.Data.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Release\Laboru.Models.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\obj\Release\Laboru.Business.csprojResolveAssemblyReference.cache
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\obj\Release\Laboru.Business.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\obj\Release\Laboru.Business.pdb

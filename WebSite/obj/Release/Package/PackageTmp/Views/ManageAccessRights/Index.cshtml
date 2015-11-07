@@ -1,0 +1,317 @@
+﻿
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+    @Styles.Render("~/Content/css/jquery.fancybox.css")
+    @Styles.Render("~/Content/css/jspkg-tabs/tabs.css")
+    @Styles.Render("~/Scripts/jstree/themes/default/style.min.css")
+
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post" enctype="multipart/form-data">
+
+            <input id="selectedPageLink" name="selectedPageLink" type="hidden"  />
+
+            <h1>@Plenum.WebSite.Globalization.PlenumResources.Pages</h1>
+            <div id="treeContent" style="margin: 5px;">
+            </div>
+
+            <br />
+            <h1>@Plenum.WebSite.Globalization.PlenumResources.Users / @Plenum.WebSite.Globalization.PlenumResources.Roles</h1>
+            <table id="table">
+                <tr>
+                    <th style="width:300px;">
+                        @Plenum.WebSite.Globalization.PlenumResources.Who
+                    </th>
+                    <th>
+                        @Plenum.WebSite.Globalization.PlenumResources.Read
+                    </th>
+                    <th>
+                        @Plenum.WebSite.Globalization.PlenumResources.Change
+                    </th>
+                    <th>
+                        @Plenum.WebSite.Globalization.PlenumResources.Delete
+                    </th>
+                </tr>                
+            </table>
+
+            <br />
+
+            <div class="disabled">
+                 @Plenum.WebSite.Globalization.PlenumResources.Inherited
+
+                <br />
+
+                <table id="tablei">
+                    <tr>
+                        <th style="width:300px;">
+                            @Plenum.WebSite.Globalization.PlenumResources.Who
+                        </th>
+                        <th>
+                            @Plenum.WebSite.Globalization.PlenumResources.Read
+                        </th>
+                        <th>
+                            @Plenum.WebSite.Globalization.PlenumResources.Change
+                        </th>
+                        <th>
+                            @Plenum.WebSite.Globalization.PlenumResources.Delete
+                        </th>
+                    </tr>                
+                </table>
+            </div>
+           
+
+            <input id="btnAddUser" type="button" value="@Plenum.WebSite.Globalization.PlenumResources.Add" />
+
+            <div style="display: none; overflow: visible">
+
+                <div class="fancy" style="overflow: visible">
+
+                    <div id="tab-container" class="tab-container" >
+                        <ul class='etabs'>
+                            <li class='tab'><a href="#divUsers">@Plenum.WebSite.Globalization.PlenumResources.Users</a></li>
+                            <li class='tab'><a href="#divRoles">@Plenum.WebSite.Globalization.PlenumResources.Roles</a></li>
+                        </ul>
+                         <div id="divUsers" >                    
+                            <div id="treeUsers" style="margin: 5px;">
+                            </div>
+                            <p class="floatright">
+                                <a href="javascript:$.fancybox.close();">@Plenum.WebSite.Globalization.PlenumResources.Close</a>
+                            </p>
+                        </div>
+                         <div id="divRoles" >                    
+                            <div id="treeRoles" style="margin: 5px;">
+                            </div>
+                            <p class="floatright">
+                                <a href="javascript:$.fancybox.close();">@Plenum.WebSite.Globalization.PlenumResources.Close</a>
+                            </p>
+                        </div>
+                </div>
+
+                </div>
+
+                 
+                
+            </div>
+
+            <br />
+            <input id="btnSubmit" style="margin-left: 500px;" type="submit" value="@Plenum.WebSite.Globalization.PlenumResources.Save" />
+        </form>
+
+        
+
+        <div style="display: none; overflow: visible">
+            <div id="divDone" class="fancy" style="overflow: visible">
+                <h1>Access Rights</h1>
+                Updated.
+                <p class="floatright">
+                    <a href="javascript:$.fancybox.close();">Close</a>
+                </p>
+            </div>
+        </div>
+
+        @Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")        
+        @Scripts.Render("~/Scripts/jquery.fancybox.js")
+
+        @Scripts.Render("~/Scripts/jspkg-tabs/jquery.hashchange.min.js")
+        @Scripts.Render("~/Scripts/jspkg-tabs/jquery.easytabs.min.js")
+
+        @Scripts.Render("~/Scripts/jstree/jstree.min.js")
+
+        <script>
+
+            $(document).ready(function () {
+
+                @if (ViewBag.done != null && ViewBag.done)
+	            {
+		            <text>
+                        $.fancybox({
+                            content: $('#divDone'),
+                            modal: true
+                        });
+                    </text>
+	            }
+                
+                $('#tab-container').easytabs({
+                    animate: false
+                });
+
+                $("#btnAddUser").on("click", function () {
+                    
+                    $.fancybox({
+                        content: $('#tab-container'),
+                        modal: true
+                    });
+                });
+
+                $('#treeContent').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                return '/Admin/ManagePage/GetChildren/';
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id }
+                            }
+                        }
+                    }
+                });
+
+                $('#treeUsers').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                return '/Admin/ManageUser/GetChildren/';
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id }
+                            }
+                        }
+                    }
+                });
+
+                $('#treeRoles').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                return '/Admin/ManageRole/GetChildren/';
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id }
+                            }
+                        }
+                    }
+                });
+
+                $('#treeContent').on("select_node.jstree", function (e, data) {
+                    
+                    var path = $("li[id=" + data.node.id + "]").attr("link");
+
+                    $("#selectedPageLink").val(path);
+
+                    //Get Access Path
+                    $.ajax({
+                        url: "/Admin/ManageAccessRights/GetAccessByPath",
+                        dataType: "json",
+                        type: "POST",
+                        data: { path: path },
+                        success: function (data) {
+
+                        },
+                        error: function (a, b, c) {
+                            alert("Error getting access rights");
+                        }
+                    })
+                        .then(function (response) {
+
+
+                            //Remove all rows
+                            $("#table").find("tr:gt(0)").remove();                            
+                            $("#tablei").find("tr:gt(0)").remove();
+
+                            $.each(response, function (i, val) {
+
+                                var id;
+                                var text;
+                                var type;
+                                var can_read = '';
+                                var can_change = '';
+                                var can_delete = '';
+
+                                //User?
+                                if (val.Email && val.Email.length > 0) {
+
+                                    id = val.UserID;
+                                    text = val.Email;
+                                    type = 'user';
+                                    
+                                } else {
+
+                                    //Role
+                                    id = val.RoleID;
+                                    text = val.RoleName;
+                                    type = 'role';                                    
+                                }
+
+                                if (val.CanRead) {
+                                    can_read = "checked";
+                                }
+                                
+                                if (val.CanChange) {
+                                    can_change = "checked";
+                                }
+
+                                if (val.CanDelete) {
+                                    can_delete = "checked";
+                                }
+
+                                //inherited?
+                                console.log(val.AccessPath);
+                                if (val.AccessPath && val.AccessPath == "xxx") {
+
+                                    can_read = can_read.replace("checked", "x");
+                                    can_change = can_change.replace("checked", "x");
+                                    can_delete = can_delete.replace("checked", "x");
+
+                                    $('#tablei tbody:last').append('<tr id="user_' + id + '_xxx" ><td >' + text + ": " + type +
+                        "<td>" + can_read + "</td>" +
+                        "<td>" + can_change + "</td>" +
+                        "<td>" + can_delete + "</td></tr>");
+                                    
+                                } else {
+                                    $('#table tbody:last').append('<tr id="user_' + id + '" ><td >' + text + ": " + type +
+                        "<td><input id='check_" + type + "_" + id + "_read' name='check_" + type + "_" + id + "_read' type='checkbox' " + can_read + " /></td>" +
+                        "<td><input id='check_" + type + "_" + id + "_change' name='check_" + type + "_" + id + "_change' type='checkbox' " + can_change + " /></td>" +
+                        "<td><input id='check_" + type + "_" + id + "_delete' name='check_" + type + "_" + id + "_delete' type='checkbox' " + can_delete + " /></td></tr>");
+                                }
+                                
+
+                            });
+
+                        });
+
+                });
+
+                $('#treeUsers').on("select_node.jstree", function (e, data) {
+                    $.fancybox.close();
+
+                    $('#table tbody:last').append('<tr id="user_' + data.node.id + '" ><td >' + data.node.text +
+                        "<td><input id='check_user_" + data.node.id + "_read' name='check_user_" + data.node.id + "_read' type='checkbox' /></td>" +
+                        "<td><input id='check_user_" + data.node.id + "_change' name='check_user_" + data.node.id + "_change' type='checkbox' /></td>" +
+                        "<td><input id='check_user_" + data.node.id + "_delete' name='check_user_" + data.node.id + "_delete' type='checkbox' /></td></td>'");
+                    
+                });
+
+                $('#treeRoles').on("select_node.jstree", function (e, data) {
+                    $.fancybox.close();
+
+                    $('#table tbody:last').append('<tr id="role_' + data.node.id + '" ><td >' + data.node.text +
+                        "<td><input id='check_role_" + data.node.id + "_read' name='check_role_" + data.node.id + "_read' type='checkbox' /></td>" +
+                        "<td><input id='check_role_" + data.node.id + "_change' name='check_role_" + data.node.id + "_change' type='checkbox' /></td>" +
+                        "<td><input id='check_role_" + data.node.id + "_delete' name='check_role_" + data.node.id + "_delete' type='checkbox' /></td></td>'");
+
+                });
+
+             });
+
+
+        </script>
+
+    </div>
+</body>
+</html>

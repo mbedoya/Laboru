@@ -1,0 +1,153 @@
+@model Plenum.Models.RoleDataModel
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+    @Styles.Render("~/Content/css/jquery.fancybox.css")
+    @Styles.Render("~/Scripts/jstree/themes/default/style.min.css")
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post">
+
+            <input id="ID" name="ID" type="hidden" value="@Model.ID.ToString()" />
+            @Plenum.WebSite.Globalization.PlenumResources.Name<br />
+            @Html.EditorFor(model => model.Name, new { maxLength = 50 })<br />
+            <div class="field_details">
+                50 characters
+            </div>
+
+            <h1>@Plenum.WebSite.Globalization.PlenumResources.Users</h1>
+
+              <table id="table">
+                <tr>
+                    <th style="width:300px;">
+                        Email
+                    </th>                    
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>                
+            </table>
+
+            <input id="btnAddUser" type="button" value="@Plenum.WebSite.Globalization.PlenumResources.Add" />
+
+            <br />
+            <input type="submit" style="margin-left: 500px;"  value="@Plenum.WebSite.Globalization.PlenumResources.Save" />
+        </form>
+
+        <div style="display: none; overflow: visible">
+                <div id="divUsers" class="fancy" style="overflow: visible">
+                    <h1>@Plenum.WebSite.Globalization.PlenumResources.Users</h1>
+                    <div id="treeUsers" style="margin: 5px;">
+                    </div>
+                    <p class="floatright">
+                        <a href="javascript:$.fancybox.close();">@Plenum.WebSite.Globalization.PlenumResources.Close</a>
+                    </p>
+                </div>
+            </div>
+
+        @Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")
+        @Scripts.Render("~/Scripts/jstree/jstree.min.js")
+        @Scripts.Render("~/Scripts/jquery.fancybox.js")
+
+        <script>
+
+            $(document).ready(function () {
+
+
+                $("#btnAddUser").on("click", function () {
+
+                    $.fancybox({
+                        content: $('#divUsers'),
+                        modal: true
+                    });
+                });                
+
+                $('#treeUsers').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                return '/Admin/ManageUser/GetChildren/';
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id }
+                            }
+                        }
+                    }
+                });
+
+                $('#treeUsers').on("select_node.jstree", function (e, data) {
+                    $.fancybox.close();
+
+                    $('#table tbody:last').append('<tr id="user_' + data.node.id + '" ><td >' + data.node.text +  '</td>' +
+                        "<td><input id='user_" + data.node.id + "' name='user_" + data.node.id + "' type='hidden' />" +                        
+                        "<a data-id=" + data.node.id + " class='delete_role_user' href='#'>@Plenum.WebSite.Globalization.PlenumResources.Delete</a></td>'");
+
+                });
+
+                $("body").on("click", "a.delete_role_user", function () {                    
+                    var ref_id = $(this).attr("data-id");                    
+                    $("#user_" + ref_id).remove();
+                });
+
+                $("#editForm").validate({
+                    rules: {
+                        Name: { required: true }
+
+                    },
+                    messages: {
+                        Name: "@Plenum.WebSite.Globalization.PlenumResources.Name is required"
+                    }
+                });
+
+
+                //Get Users
+                $.ajax({
+                    url: "/Admin/ManageRole/GetUsers",
+                    dataType: "json",
+                    type: "POST",
+                    data: { id: '@Model.ID' },
+                    success: function (data) {
+
+                    },
+                    error: function (a, b, c) {
+                        //alert("Error getting users");
+                    }
+                })
+                    .then(function (response) {
+
+                        $.each(response, function (i, val) {
+
+                            $('#table tbody:last').append('<tr id="user_' + val.ID + '" ><td >' + val.Email + '</td>' +
+                       "<td><input id='user_" + val.ID + "' name='user_" + val.ID + "' type='hidden' />" +
+                       "<a data-id=" + val.ID + " class='delete_role_user' href='#'>@Plenum.WebSite.Globalization.PlenumResources.Delete</a></td>'");
+
+
+                        });
+
+                    });
+
+
+            });
+
+
+        </script>
+
+    </div>
+</body>
+</html>

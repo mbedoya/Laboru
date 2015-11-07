@@ -1,0 +1,70 @@
+@model Plenum.Models.PageDataModel
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post" enctype="multipart/form-data">
+            
+            @Plenum.WebSite.Globalization.PlenumResources.Name<br />
+            @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Name", value = Model.Name, type = "text", size = 80, options = "" }); }
+            <br />
+            <div class="field_details">
+                80 @Plenum.WebSite.Globalization.PlenumResources.Characters
+            </div>
+            <br />
+
+            @Plenum.WebSite.Globalization.PlenumResources.PageType<br />
+            @{ Html.RenderAction("ForeignKeyDisplay", "Admin", new { fieldName = "PageTypeID", fieldValue = @Model != null ? @Model.PageTypeID : 0, primaryTable = "Pagetype", readOnly = false, data = Plenum.Business.PagetypeBO.GetInstance().GetAll() }); }
+            <br />
+
+            <!-- Parent Page -->
+            <input id="ParentPageID" name="ParentPageID" type="hidden" value="@( Model != null ? @Model.ParentPageID : 0 )" />
+            <br />
+
+            <br />
+            <input type="submit" value="@Plenum.WebSite.Globalization.PlenumResources.Save" />
+        </form>
+
+        @Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")
+
+        <script>
+
+            $(document).ready(function () {
+
+                $("#editForm").validate({
+                    rules: {
+                        Name: { required: true },
+                        PageTypeID: { required: true }
+                    },
+                    messages: {
+                        Name: "@Plenum.WebSite.Globalization.PlenumResources.Name is required",
+                        PageTypeID: "@Plenum.WebSite.Globalization.PlenumResources.PageType is required",
+                    }
+                });
+
+
+            });
+            
+        </script>
+
+    </div>
+</body>
+</html>

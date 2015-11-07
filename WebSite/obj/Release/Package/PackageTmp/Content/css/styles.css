@@ -1,0 +1,317 @@
+﻿
+	/* Custom, iPhone Retina */ 
+	@media only screen and (min-width : 320px) {
+		//div.site-name p.title a img {max-width:50%!important;}
+		.site-name {width: 154px;}
+	}
+
+	/* Extra Small Devices, Phones */ 
+	@media only screen and (min-width : 480px) {
+
+	}
+
+	/* Small Devices, Tablets */
+	@media only screen and (min-width : 768px) {
+		//div.site-name p.title a img{max-width:100%!important;}
+		.site-name {width: 300px;}
+	}
+
+	/* Medium Devices, Desktops */
+	@media only screen and (min-width : 992px) {
+
+	}
+
+	/* Large Devices, Wide Screens */
+	@media only screen and (min-width : 1200px) {
+
+	}
+
+
+
+body {
+    font-size: 13px;
+}
+
+input[type=text] {
+    border: solid 1px #A6D13B;
+    padding: 5px;
+    width: 230px;
+    border-radius: 4px;
+}
+
+input[type=password] {
+border: solid 1px #A6D13B;
+padding: 5px;
+width: 230px;
+border-radius: 4px;
+}
+
+textarea {
+    border: solid 1px #A6D13B;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+input[type=submit], input[type=button], .button {
+    color: #fff;
+    border: solid 1px #A6D13B;
+    width: 100px;
+    height: 30px;
+    margin-top: 15px;
+    background-color: #A6D13B;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.link_button {
+    color: #A6D13B;
+    font-weight: bold;
+}
+
+select {
+    border: solid 1px #A6D13B;
+    padding: 5px;
+    width: 160px;
+    border-radius: 4px;
+    background: url("../img/arrow-down-green.png") no-repeat right #fff;
+    appearance:none;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+}
+
+.button a {
+    text-decoration: none;
+    color: #fff;    
+    margin: 15px;
+}
+
+img {
+    border: 0px solid !important;
+}
+
+fieldset .editor-label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    font-size: 13px;
+}
+
+fieldset .editor-field {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+fieldset .editor-field-file {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    height: 65px;
+}
+
+fieldset input[type=text]{    
+    width: 250px;
+}
+
+fieldset input[type=submit]{    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    width: 100px;
+}
+
+.main-content b {
+    font-size: 13px;
+    color: rgb(100,100,100);
+}
+
+.main-content p {
+    margin-top: 10px;
+}
+
+.form .label {
+    width: 100px !important;
+    margin: 10px 10px 0px 10px;
+    font-size: 12px;
+}
+
+.form .field {
+    width: 200px !important;
+    margin: 10px 10px 10px 10px;
+    font-size: 12px;
+    float:left;
+}
+
+.form input {
+    float: left;
+}
+
+/* Custom */
+
+.page-container-2 {
+    width: 100%;
+}
+
+.nav2 ul { 
+    width: 100%;
+}
+
+.nav3 { 
+    width: 20%;
+}
+
+.nav3 ul {
+    width: 100%;
+}
+
+.content2 {
+    width: 75%;
+}
+
+.content2-pagetitle, .content3-pagetitle {
+     width: 95%;
+     margin-left: 15px;
+}
+
+.footer {   
+    width: 100%;
+}
+
+.nav1-container {
+    width: 100%;
+}
+
+.navflag-container {
+    width: 100%;
+}
+
+.nav2 li a,.nav2 a.selected {
+    text-transform: none;
+}
+
+.nav31 {overflow: hidden; clear: both; float: left; width: 160px; min-height: 500px; margin: 0px; padding: 0px; color: rgb(0,0,0); font-size: 1.0em;}
+.nav31 ul {width: 160px; margin: 0px 0px 20px 0px; padding: 0px; }	
+#left_panel li {list-style: none;}
+#left_panel li.title {margin: -10px 0px 0px -25px !important; padding: 3px 5px 2px 15px; border-bottom: solid 2px #A6D13B; color:#A6D13B; text-transform: uppercase; font-weight: bold; font-size: 13px;}
+/*.nav31 li.group a {display: block; min-height: 1.7em; height: auto !important; height: 1.7em; line-height: 1.7em; margin: 0px; padding: 0px 7px 0px 15px; border-top: solid 1px rgb(200,200,200); border-left: solid 7px rgb(219,230,241); color: rgb(0,0,0); font-weight: bold; font-size: 120%;}*/
+/* .nav31 li a {display: block; min-height: 1.7em; height: auto !important; height: 1.7em; line-height: 1.7em; margin: 0px; padding: 0px 7px 0px 20px; border-left: solid 7px rgb(219,230,241); color: rgb(0,0,0); text-decoration: none; font-size: 120%;} */
+ .nav31 li a {font-size: 120%; }
+#left_panel li a:hover, .nav3 li a.selected { color: rgb(0,0,0); text-decoration: none;}
+
+.nav31 { 
+    width: 20%;
+}
+
+#left_panel ul {
+    width: 100%;
+}
+
+#left_panel ul.options li {
+        margin-left: 0px;
+        margin-top: 5px;
+    }
+
+#left_panel ul.options li a {
+        text-decoration: none;
+        color: #000;
+        font-size: 13px;
+        padding: 5px;
+    }
+
+#left_panel ul.options li.title {
+        margin: 0px;
+    }
+
+#left_panel ul.options li.title a {
+        color: #A6D13B;
+    }
+
+.sidebar-txtbox-noshade {
+    padding: 0px;
+}
+
+table {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+table tr th {
+    color: rgb(0,0,0);
+    font-weight: bold;
+    font-size: 15px;
+    width: 150px;
+    border-bottom: solid 2px #A6D13B;
+    padding-bottom: 5px;    
+    padding: 5px;
+    color:#A6D13B;
+}
+
+table tr td {color: rgb(0,0,0); font-size: 15px;width: 150px; border-bottom: solid 1px #CCC; padding: 5px;}
+table tr td a {color:#A6D13B; text-decoration:underline; font-size: 15px}
+table tr td.row a {color:#000; text-decoration:underline; font-size: 15px}
+
+.disabled {
+    font-size:13px;
+    color: #CCC;
+}
+
+.disabled table {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.disabled table tr th {
+    color: rgb(0,0,0);    
+    font-size: 13px;
+    font-weight:normal;
+    width: 150px;
+    border-bottom: solid 2px #CCC;
+    padding-bottom: 5px;    
+    padding: 5px;
+    color:#CCC;
+}
+
+.disabled table tr td {color: #CCC; font-size: 15px;width: 150px; border-bottom: solid 1px #CCC; padding: 5px; font-weight:normal;}
+.disabled table tr td a {color:#A6D13B; text-decoration:underline; font-size: 15px}
+.disabled table tr td.row a {color:#000; text-decoration:underline; font-size: 15px}
+
+.error {
+    display:block;
+    font-size: 12px;
+    color: red;    
+}
+
+.field_details { color: #ccc; font-size: 12px;}
+
+.ficha {
+    padding: 20px;
+    margin-right: 10px;
+    border: solid 1px #A6D13B;
+}
+
+.plenum_reference_button {
+    width: 30px !important;
+    margin: 3px;
+}
+
+.plenum_file_button {
+    width: 30px !important;
+    margin: 3px;
+}
+
+.fancy {
+    width: 400px;
+}
+
+p.floatright a {
+    color: #A6D13B;
+}
+
+fieldset {
+    border: solid 0px;
+}
+
+.header_banner {
+    height: 80px;
+    background-color: #003D69;
+}

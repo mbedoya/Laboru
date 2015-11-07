@@ -1,0 +1,128 @@
+@model Plenum.Models.PagefieldDataModel
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+	@Styles.Render("~/Scripts/datepick/jquery.datepick.css")
+	@Styles.Render("~/Content/css/jquery.fancybox.css")
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post" enctype="multipart/form-data">
+
+						<input id="ID" name="ID" type="hidden" value="@Model.ID.ToString()" />
+     			Name<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Name", value = Model.Name, type = "text", size = 45, options = "" }); }<br />
+						
+						<div class="field_details">
+                45 characters
+            </div>
+			<br />
+							Type<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Type", value = Model.Type, type = "text", size = 20, options = "" }); }<br />
+						
+						<div class="field_details">
+                20 characters
+            </div>
+			<br />
+							PageID<br />
+            				 				
+					@{ Html.RenderAction("ForeignKeyDisplay", "Admin", new { fieldName = "PageID", fieldValue = @Model != null ? @Model.PageID : 0, primaryTable = "Page", readOnly = false, data = Plenum.Business.PageBO.GetInstance().GetAll() }); }<br />
+							
+							IntValue<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "IntValue", value = Model.IntValue, type = "text", size = 0, options = "" }); }<br />
+						
+							DoubleValue<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "DoubleValue", value = Model.DoubleValue, type = "text", size = 0, options = "" }); }<br />
+						
+							StringValue<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "StringValue", value = Model.StringValue, type = "text", size = 255, options = "" }); }<br />
+						
+						<div class="field_details">
+                255 characters
+            </div>
+			<br />
+							LongStringValue<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "LongStringValue", value = Model.LongStringValue, type = "text", size = 10000, options = "" }); }<br />
+						
+						<div class="field_details">
+                10000 characters
+            </div>
+			<br />
+							XMLStringValue<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "XMLStringValue", value = Model.XMLStringValue, type = "text", size = 16777215, options = "" }); }<br />
+						
+						<div class="field_details">
+                16777215 characters
+            </div>
+			<br />
+							DateValue<br />
+            				@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "DateValue", value = Model.DateValue, type = "date", size = 0, options = "" }); }<br />
+            			
+							ReferenceValue<br />
+            				 					@{ Html.RenderAction("FieldDisplay", "Admin", new { name = "ReferenceValue", value = Model.ReferenceValue, type = "text", size = 0, options = "" }); }<br />
+						
+				
+            <br />
+            <input type="submit" value="Save" />
+        </form>
+
+		@Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.plugin.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.datepick.min.js")
+		@Scripts.Render("~/Scripts/jquery.fancybox.js")
+
+        <script>
+
+            $(document).ready(function () {
+
+				$('.fancybox').fancybox();
+
+				 //DatePick
+                $(function () {
+
+												  
+								//if date is not readonly
+								if (!$('#DateValue').is('[readonly]')) {
+									$('#DateValue').datepick({ dateFormat: 'dd/mm/yyyy' });
+								}
+							                     
+                });
+
+
+                $("#editForm").validate({
+                    rules: {
+													  Name: { required: true },
+							 							  Type: { required: true },
+							 							  PageID: { required: true },
+							                         
+                    },
+                    messages: {
+                        							  Name: "Name is required",
+							 							  Type: "Type is required",
+							 							  PageID: "PageID is required",
+							                     }
+                });
+
+            });
+
+
+        </script>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+﻿@using Plenum.WebSite.Globalization
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- Page title -->
+<div id="pageTitle" class="content2-pagetitle">@PlenumResources.Administration</div>
+
+<iframe id="pageIframe" style="width:95%;border:solid 0px; height:550px; margin-left:20px;" src=""></iframe>
+
+@section left_body{
+    
+    <ul class="options">
+        <li class="title">@PlenumResources.Security</li>
+        <li class="group"><a id="optionUsers" href="#">@PlenumResources.Users</a></li>
+        <li class="group"><a id="optionRoles" href="#">@PlenumResources.Roles</a></li>
+        <li class="group"><a id="optionAccessRights" href="#">@PlenumResources.AccessRights</a></li>
+        <li class="group"><a id="optionExperts" href="#">Expertos</a></li>
+    </ul>
+
+
+
+    @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Content"))
+    {
+        <ul class="options">
+            <li class="title">@PlenumResources.Templates</li>
+            <li class="group"><a id="optionPageTemplates" href="#">@PlenumResources.Pages</a></li>
+            <li class="group"><a id="optionExportPages" href="#">@PlenumResources.ExportContent</a></li>
+            <li class="group"><a id="optionImportPages" href="#">@PlenumResources.ImportContent</a></li>        
+        </ul>    
+    }
+
+    @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Commerce"))
+    {
+        <ul class="options">
+            <li class="title">@PlenumResources.MasterData</li>
+            <li class="group"><a id="optionCities" href="#">@PlenumResources.Cities</a></li>
+            <li class="group"><a id="optionTaxonomies" href="#">@PlenumResources.Taxonomies</a></li>  
+        </ul>
+    }    
+
+    
+
+        @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Commerce") || Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Crm"))
+        {
+            <ul class="options">
+                <li class="title">@PlenumResources.ImportData</li>        
+                @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Commerce"))
+                {
+                    <li class="group"><a id="optionProductBulkImport" href="#">@PlenumResources.Products</a></li>    
+                }
+                @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Crm"))
+                {
+                    <li class="group"><a id="optionProspects" href="#">@PlenumResources.Prospects</a></li>                    
+                }                   
+            </ul>
+        }
+
+        
+    
+
+}
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#optionPageTemplates").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.Templates");
+                $("#pageIframe").attr("src", "/admin/managepagetype");
+            });
+
+            $("#optionExperts").on("click", function () {
+                $("#pageTitle").html("Expertos");
+                $("#pageIframe").attr("src", "/admin/manageexpert");
+            });
+
+            $("#optionExportPages").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.ExportContent");
+                $("#pageIframe").attr("src", "/admin/managepage/exportdata");
+            });
+
+            $("#optionImportPages").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.ImportContent");
+                $("#pageIframe").attr("src", "/admin/managepage/importdata");
+            });
+
+            $("#optionTaxonomies").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.Taxonomies");
+                $("#pageIframe").attr("src", "/admin/managetaxonomy");
+            });
+
+            $("#optionCities").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.Cities");
+                $("#pageIframe").attr("src", "/admin/managecity");
+            });
+
+            $("#optionProductBulkImport").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.Products_BulkInsert");
+                $("#pageIframe").attr("src", "/admin/manageproduct/bulkinsert");
+            });
+
+            $("#optionProspects").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.Prospects_BulkInsert");
+                $("#pageIframe").attr("src", "/admin/manageprospect/bulkinsert");
+            });
+
+            $("#optionUsers").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.Users");
+                $("#pageIframe").attr("src", "/admin/manageuser");
+            });
+
+            $("#optionRoles").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.Roles");
+                $("#pageIframe").attr("src", "/admin/managerole");
+            });
+
+            $("#optionAccessRights").on("click", function () {
+                $("#pageTitle").html("@PlenumResources.AccessRights");
+                $("#pageIframe").attr("src", "/admin/ManageAccessRights");
+            });
+        });
+
+    </script>
+
+}

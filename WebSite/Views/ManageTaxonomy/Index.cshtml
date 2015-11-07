@@ -1,0 +1,105 @@
+@model List<Plenum.Models.TaxonomyDataModel>
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+    @Styles.Render("~/Scripts/jstree/themes/default/style.min.css")
+</head>
+<body>
+    <div>
+
+        <form id="indexForm">
+            Name<br />
+            <input id="Name" name="Name" type="text" />
+            <br />
+            <input type="submit" value="Search" />
+        </form>
+
+        <div id="treeContent" style="margin: 5px;">
+        </div>
+
+        @Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jstree/jstree.min.js")
+
+
+        <script>
+
+            $(document).ready(function () {
+
+
+                var selected_node_id = null;
+
+                $('#treeContent').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                return '/Admin/ManageTaxonomy/GetChildren/';
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id }
+                            }
+                        }
+                    },
+                    "plugins": [
+                      "contextmenu"
+                    ],
+                    "contextmenu": {
+                        "items": function ($node) {
+                            return {
+                                "Create": {
+                                    "label": "Create Taxonomy",
+                                    "action": function (obj) {
+
+                                        if (selected_node_id == null) {
+                                            alert("Please select Parent Taxonomy");
+                                        } else {
+                                            window.location.href = '/Admin/ManageTaxonomy/Edit/?ParentID=' + selected_node_id;
+                                        }
+
+                                    }
+                                },
+                                "Rename": {
+                                    "label": "Edit",
+                                    "action": function (obj) {
+                                        if (selected_node_id == null) {
+                                            alert("Please select Taxonomy");
+                                        } else {
+                                            window.location.href = '/Admin/ManageTaxonomy/Edit/' + selected_node_id;
+                                        }
+                                    }
+                                },
+                                "Delete": {
+                                    "label": "Delete Taxonomy",
+                                    "action": function (obj) {
+                                        this.remove(obj);
+                                    }
+                                }
+                            };
+                        }
+                    }
+                });
+
+                $('#treeContent').on("select_node.jstree", function (e, data) {
+                    selected_node_id = data.node.id;
+                });
+
+
+
+            });
+        </script>
+
+    </div>
+</body>
+</html>

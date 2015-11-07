@@ -1,0 +1,256 @@
+@model Plenum.Models.PageDataModel
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+    @Styles.Render("~/Scripts/datepick/jquery.datepick.css")
+    @Styles.Render("~/Content/css/jquery.fancybox.css")
+    @Styles.Render("~/Content/css/jspkg-tabs/tabs.css")
+    @Styles.Render("~/Scripts/jstree/themes/default/style.min.css")
+
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post" enctype="multipart/form-data">
+
+            <div id="tab-container" class="tab-container">
+                <ul class='etabs'>
+                    <li class='tab'><a href="#page-data">@Plenum.WebSite.Globalization.PlenumResources.Data</a></li>
+                    <li class='tab'><a href="#page-configuration">@Plenum.WebSite.Globalization.PlenumResources.Configuration</a></li>
+                </ul>
+                <div id="page-data" class="ficha">
+
+                    <br />
+
+                    <input id="ID" name="ID" type="hidden" value="@Model.ID.ToString()" />
+                    @Plenum.WebSite.Globalization.PlenumResources.Name<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Name", value = Model.Name, type = "text", size = 80, options = "" }); }
+                    <br />
+                    <div class="field_details">
+                        80 @Plenum.WebSite.Globalization.PlenumResources.Characters
+                    </div>
+                    <br />
+
+                    
+                    @if (Model.Fields != null && Model.Fields.Count > 0)
+                    {
+                        foreach (var item in @Model.Fields)
+                        {
+                             @item.GetFieldLabel()<br />
+                            { Html.RenderAction("FieldDisplay", "Admin", new { name = item.Name, value = item.Value, type = item.Type, size = 255, options = "" }); }
+                        <br />
+
+                        <div class="field_details">
+                            255 @Plenum.WebSite.Globalization.PlenumResources.Characters
+                        </div>
+                        <br />
+                        }
+                    }
+
+                </div>
+                <div id="page-configuration" class="ficha">
+
+                    @Plenum.WebSite.Globalization.PlenumResources.Link<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Link", value = Model.Link, type = "text", size = 255, options = "" }); }
+                    <div class="field_details">
+                        255 characters
+                    </div>
+
+                    <br />
+
+                    <!-- Page Type -->
+                    <input id="PageTypeID" name="PageTypeID" type="hidden" value="@( Model != null ? @Model.PageTypeID : 0 )" />
+
+                    <!-- Parent Page -->
+                    <input id="ParentPageID" name="ParentPageID" type="hidden" value="@( Model != null ? @Model.ParentPageID : 0 )" />
+                    
+
+                    @Plenum.WebSite.Globalization.PlenumResources.VirtualLink<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "VirtualLink", value = Model.VirtualLink, type = "text", size = 255, options = "" }); }
+                    <br />
+
+                    <div class="field_details">
+                        255 characters
+                    </div>
+                    <br />
+                    @Plenum.WebSite.Globalization.PlenumResources.SortIndex<br />
+                    @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "SortIndex", value = Model.SortIndex, type = "text", size = 0, options = "" }); }
+                    <br />
+
+                </div>
+            </div>
+
+            <br />
+            <input id="btnSubmit" type="submit" value="@Plenum.WebSite.Globalization.PlenumResources.Save" />
+        </form>
+
+        <div style="display: none; overflow: visible">
+            <div id="divPages" class="fancy" style="overflow: visible">
+                <h1>@Plenum.WebSite.Globalization.PlenumResources.Pages</h1>
+                <div id="treeContent" style="margin: 5px;">
+                </div>
+                <p class="floatright">
+                    <a href="javascript:$.fancybox.close();">@Plenum.WebSite.Globalization.PlenumResources.Close</a>
+                </p>
+            </div>
+        </div>
+
+        <div style="display: none; overflow: visible">
+            <div id="divFiles" class="fancy" style="overflow: visible">
+                <h1>@Plenum.WebSite.Globalization.PlenumResources.Files</h1>
+                <iframe style="width:400px;" src="/admin/managefile/index/?parentId=@Model.ID"  ></iframe>
+                <p class="floatright">
+                    <a href="javascript:$.fancybox.close();">@Plenum.WebSite.Globalization.PlenumResources.Close</a>
+                </p>
+            </div>
+        </div>
+
+        @Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.plugin.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.datepick.min.js")
+        @Scripts.Render("~/Scripts/jquery.fancybox.js")
+        @Scripts.Render("~/Scripts/ckeditor/ckeditor.js")
+
+        @Scripts.Render("~/Scripts/jspkg-tabs/jquery.hashchange.min.js")
+        @Scripts.Render("~/Scripts/jspkg-tabs/jquery.easytabs.min.js")
+
+        @Scripts.Render("~/Scripts/jstree/jstree.min.js")
+
+        <script>
+
+            var selected_file = null;
+            var selected_file_type = null;
+
+            function onSelectFile(fileID,filePath) {
+                $.fancybox.close();
+
+                $("#" + selected_file).val(filePath.replace('~','') + " {" + fileID + "}");                
+            }
+            
+            $(document).ready(function () {
+
+                $('#tab-container').easytabs({
+                    animate: false
+                });
+
+                $('.fancybox').fancybox();
+
+                //DatePick
+                $('.plenum_date').datepick({ dateFormat: 'dd/mm/yyyy' });
+
+                $("#editForm").validate({
+                    rules: {
+                        Name: { required: true },
+                        PageTypeID: { required: true },
+                        Quantity: { number: true }
+
+                    },
+                    messages: {
+                        Name: "@Plenum.WebSite.Globalization.PlenumResources.Name is required",
+                        PageTypeID: "@Plenum.WebSite.Globalization.PlenumResources.PageType is required",
+                    }
+                });
+
+
+                @if (Model.Fields != null && Model.Fields.Count > 0)
+                {
+                    foreach (var item in @Model.Fields)
+                    {
+                        if (item.Type.ToLower() == "int")
+                        {
+                            <text>
+                            $('#@item.Name').rules('add', { number: true });
+                            </text>
+                        }
+
+                    }
+                }
+
+                var selected_reference = null;
+                var selected_reference_type = null;                
+
+                $(".plenum_reference_button").on("click", function () {
+
+                    selected_reference = $(this).attr("data");
+                    selected_reference_type = $(this).attr("data-type");
+
+                    $.fancybox({
+                        content: $('#divPages'),
+                        modal: true
+                    });
+                });
+
+                $(".plenum_file_button").on("click", function () {
+
+                    selected_file = $(this).attr("data");
+                    selected_file_type = $(this).attr("data-type");
+
+                    $.fancybox({
+                        content: $('#divFiles'),
+                        modal: true
+                    });
+                });
+
+                $("body").on("click", "a.delete_plenum_reference", function () {
+                    ref = $(this).attr("data-name");
+                    ref_id = $(this).attr("data-id");
+
+                    $("#" + ref).val($("#" + ref).val().replace(ref_id + ";", ""));
+                    $("#row_rl_" + ref + ref_id).remove();
+                });
+
+                $('#treeContent').jstree({
+                    'core': {
+                        'data': {
+                            'url': function (node) {
+                                return '/Admin/ManagePage/GetChildren/';
+                            },
+                            'data': function (node) {
+                                return { 'id': node.id }
+                            }
+                        }
+                    }
+                });
+
+                $('#treeContent').on("select_node.jstree", function (e, data) {
+                    $.fancybox.close();
+
+                    //Reference List?
+                    if (selected_reference_type == "rl") {
+                        $('#table' + selected_reference + ' tbody:last').append('<tr id="row_rl_' + selected_reference + data.node.id + '"><td style="width:300px">' + data.node.text + " {" + data.node.id + "}</td><td>"
+                            + "<a data-name='" + selected_reference + "' data-id='" + data.node.id + "' class='delete_plenum_reference' href='#'>Delete</a>" + " </td>'");
+
+                        $("#" + selected_reference).val($("#" + selected_reference).val() + data.node.id + ";");
+
+                    } else {
+                        $("#" + selected_reference).val(data.node.text + " {" + data.node.id + "}");
+                    }
+                    
+                });
+
+                $("#btnSubmit").on("click", function () {
+                    window.parent.updateContentTree();
+                });
+
+            });
+
+
+        </script>
+
+    </div>
+</body>
+</html>

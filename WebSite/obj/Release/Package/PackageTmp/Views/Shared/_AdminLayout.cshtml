@@ -1,0 +1,219 @@
+﻿@using System.Web.Optimization
+@using Plenum.Utilities.Security
+
+@{
+    string siteName = Plenum.WebSite.WebUtilities.Misc.GetAppSetting(Plenum.WebSite.WebUtilities.Const.AppSettings.SiteName);
+    string path = HttpContext.Current.Request.Path;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>
+        @siteName
+    </title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+    @Styles.Render("~/Content/css/custom_styles.css")
+    @Styles.Render("~/Content/css/contextmenu/jquery.contextmenu.css")
+    @Styles.Render("~/Scripts/jstree/themes/default/style.min.css")
+    @Styles.Render("~/Content/css/splitter.css")
+
+    @RenderSection("styles", required: false)
+    
+</head>
+<body>
+
+    <div class="page-container-2">
+
+        <!-- HEADER -->
+        <!-- Flag navigations -->
+        <div class="navflag-container">
+            <div class="navflag">
+                <ul>
+                    @if (!SecurityManager.SecurityEnabled() || SecurityManager.SesionStarted())
+                    {
+                        <li>@SecurityManager.GetLoggedUser().Email (@SecurityManager.GetLoggedUser().Role)</li>
+                    }
+                    else
+                    {
+                        <li>
+                            &nbsp;
+                        </li>    
+                    }                    
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation Level 1 -->
+        <div class="nav1-container">
+            @if (!SecurityManager.SecurityEnabled() || SecurityManager.SesionStarted())
+            {
+                <div class="nav1">
+                    <ul>
+                        <li><a target="_blank" href="/">@Plenum.WebSite.Globalization.PlenumResources.ViewSite</a></li>
+                        <li>@Html.ActionLink(@Plenum.WebSite.Globalization.PlenumResources.SignOut, "SignOut", "Security")</li>
+                    </ul>
+                </div>
+            }
+        </div>
+
+        <!-- Sitename -->
+        <div class="site-name">
+            <p class="title"><a title="@siteName" href="index.html">
+                <img src="/content/img/logo.jpg" /></a></p>
+            <p class="subtitle">&nbsp;</p>
+        </div>
+
+        <!-- Header banner -->
+        <div class="header_banner" >&nbsp;</div>
+
+        @if (!SecurityManager.SecurityEnabled() || SecurityManager.SesionStarted())
+        {
+            <!-- Navigation Level 2 -->
+            <div class="nav2">
+                <ul>
+                    <li>
+                        @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Content") &&
+                            (Plenum.Business.SecurityBO.GetInstance().LoggedUserIsAdmin() ||
+                            Plenum.Business.SecurityBO.GetInstance().LoggedUserCanAccessContent()))
+                        {
+                            if (path.ToLower().EndsWith("content") || path == "/admin")
+                            {
+                            <a href="/admin" class="selected">@Plenum.WebSite.Globalization.PlenumResources.Content</a>    
+                            }
+                            else
+                            {
+                            <a href="/admin">@Plenum.WebSite.Globalization.PlenumResources.Content</a>
+                            }
+                        }
+                        
+                    </li>
+                    <li>
+                        @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Crm") && Plenum.Business.SecurityBO.GetInstance().LoggedUserIsAdmin())
+                        {
+                            if (path.ToLower().EndsWith("crm"))
+                            {
+                            <a href="/admin/admincrm" class="selected">CRM</a>    
+                            }
+                            else
+                            {
+                            <a href="/admin/admincrm">CRM</a>
+                            }
+                        }                        
+                    </li>
+                    <li>
+                        @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Commerce") && Plenum.Business.SecurityBO.GetInstance().LoggedUserIsAdmin())
+                        {
+                            if (path.ToLower().EndsWith("commerce"))
+                            {
+                                <a href="/admin/admincommerce" class="selected">@Plenum.WebSite.Globalization.PlenumResources.Commerce</a>    
+                            }
+                            else
+                            {
+                                <a href="/admin/admincommerce">@Plenum.WebSite.Globalization.PlenumResources.Commerce</a>
+                            }
+                        }                        
+                    </li>
+                    <li>
+                        @if (Plenum.Business.SecurityBO.GetInstance().ModuleIsActive("Workflows") && Plenum.Business.SecurityBO.GetInstance().LoggedUserIsAdmin())
+                        {
+                            if (path.ToLower().EndsWith("workflows"))
+                            {
+                            <a href="/admin/adminworkflows" class="selected">@Plenum.WebSite.Globalization.PlenumResources.Workflows</a>    
+                            }
+                            else
+                            {
+                            <a href="/admin/adminworkflows">@Plenum.WebSite.Globalization.PlenumResources.Workflows</a>
+                            }
+                        }                        
+                    </li>
+                    <li>
+                        @if (Plenum.Business.SecurityBO.GetInstance().LoggedUserIsAdmin())
+                        {
+                            if (path.ToLower().EndsWith("administration"))
+                            {
+                            <a href="/admin/adminadministration" class="selected">@Plenum.WebSite.Globalization.PlenumResources.Administration</a>    
+                            }
+                            else
+                            {
+                            <a href="/admin/adminadministration">@Plenum.WebSite.Globalization.PlenumResources.Administration</a>
+                            }                            
+                        }
+
+                        
+
+                    </li>
+                </ul>
+            </div>    
+        }
+
+
+
+        <!-- Buffer after header -->
+        <div class="buffer"></div>
+
+        <div id="splitter">
+            <!-- NAVIGATION -->
+            <!-- Navigation Level 3 -->
+            <div id="left_panel" >
+
+                <!-- Main title -->
+                @RenderSection("left_body", required: false)
+
+            </div>
+
+            <!-- 	CONTENT -->
+            <div id="right_panel" >
+
+                @RenderBody()
+
+            </div>
+        </div>
+        
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <p><b>Copyright &copy; 2014 @siteName | All Rights Reserved</b></p>
+        </div>
+    </div>
+
+    @Scripts.Render("~/Scripts/jquery.js")
+    @Scripts.Render("~/Scripts/jquery.contextmenu.js")
+    @Scripts.Render("~/Scripts/jstree/jstree.min.js")
+    @Scripts.Render("~/Scripts/splitter.js")
+
+    <script type="text/javascript">
+
+        function setHeight() {
+            var winHeight = $(window).height();
+            $("#splitter").css({ "height": (winHeight - 170) + 'px' });
+
+            $("iframe").each(function (index) {
+                $(this).css({ "height": (winHeight - 220) + 'px' });
+            });
+        }
+
+        $(document).ready(function () {
+
+            @if (Plenum.Utilities.Security.SecurityManager.GetLoggedUser() != null)
+	        {
+                <text>
+                     $("#splitter").splitter({ maxAsize: 400, splitVertical: true, A: $('#left_panel'), B: $('#right_panel'), closeableto: 1 });
+                </text>
+	        }    
+
+            setHeight();
+
+            $(window).resize(function () {
+                setHeight();
+            });            
+        });
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

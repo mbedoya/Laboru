@@ -1,0 +1,34 @@
+﻿@model Plenum.WebSite.Models.ContentTreeModelUI
+
+@if (Model.ParentPages)
+{
+    <ul>
+        <li id="0" data-jstree='{"opened":true}' class="cmenu1" >@Plenum.WebSite.Globalization.PlenumResources.Root
+            <ul>
+                <li class="cmenu1" id="-1" >@Plenum.WebSite.Globalization.PlenumResources.Trash</li>
+            </ul>
+            @if (Model.Pages != null && Model.Pages.Count > 0)
+                {
+                    foreach (var item in Model.Pages)
+                    {
+                        <ul>
+                            <li class="jstree-closed" id="@item.ID" link="@item.Link" data-jstree='@(item.ID.ToString() == Plenum.Utilities.Web.Config.GetHomeID() ? "{\"icon\":\"/content/img/world.png\"}" : "{\"icon\":\"/content/img/icon_document.gif\"}" )'>@item.Name
+                            </li>
+                        </ul>
+                    }
+                } 
+        </li>
+    </ul>
+}else{
+     if (Model.Pages != null && Model.Pages.Count > 0)
+    {
+        foreach (var item in Model.Pages)
+        {
+            <ul>
+                <li class="jstree-closed" id="@item.ID" link="@item.Link" data-jstree='@(item.ID.ToString() == Plenum.Utilities.Web.Config.GetHomeID() ? "{\"icon\":\"/content/img/world.png\"}" : "{\"icon\":\"/content/img/icon_document.gif\"}" )'>@item.Name</li>
+            </ul>
+        }
+    }else{
+         <ul></ul>
+     }
+}

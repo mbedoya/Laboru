@@ -1,0 +1,94 @@
+@model Plenum.Models.FileDataModel
+
+@using System.Web.Optimization
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css/style_screen.css")
+    @Styles.Render("~/Content/css/style_print.css")
+    @Styles.Render("~/Content/css/styles.css")
+    @Styles.Render("~/Scripts/datepick/jquery.datepick.css")
+    @Styles.Render("~/Content/css/jquery.fancybox.css")
+</head>
+<body>
+    <div>
+
+        <form id="editForm" method="post" enctype="multipart/form-data">
+
+            <input id="ID" name="ID" type="hidden" value="@Model.ID.ToString()" />            
+            <!-- PageID -->
+            <input id="PageID" name="PageID" type="hidden" value="@Model.PageID" />
+
+            Title<br />
+            @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Title", value = Model.Title, type = "text", size = 50, options = "" }); }
+            <br />
+
+            <div class="field_details">
+                50 characters
+            </div>
+            <br />
+            Description<br />
+            @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Description", value = Model.Description, type = "text", size = 200, options = "" }); }
+            <br />
+
+            <div class="field_details">
+                200 characters
+            </div>
+            <br />
+
+            File<br />
+            @{ Html.RenderAction("FieldDisplay", "Admin", new { name = "Name", value = Model.Name, type = "text", size = 200, options = "File" }); }
+            <br />
+
+            <div class="field_details">
+                200 characters
+            </div>
+            <br />
+
+            <br />
+            <input type="submit" value="Save" />
+        </form>
+
+        @Scripts.Render("~/Scripts/jquery.js")
+        @Scripts.Render("~/Scripts/jquery.validate.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.plugin.min.js")
+        @Scripts.Render("~/Scripts/datepick/jquery.datepick.min.js")
+        @Scripts.Render("~/Scripts/jquery.fancybox.js")
+
+        <script>
+
+            $(document).ready(function () {
+
+                $('.fancybox').fancybox();
+
+                //DatePick
+                $(function () {
+
+
+                });
+
+
+                $("#editForm").validate({
+                    rules: {
+
+                    },
+                    messages: {
+                    }
+                });
+
+            });
+
+
+        </script>
+
+    </div>
+</body>
+</html>

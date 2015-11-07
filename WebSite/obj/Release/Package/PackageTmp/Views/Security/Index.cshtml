@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2></h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Log in</legend>
+
+        Email: <input type="text" name="Email" />
+        Password: <input type="password" name="Password" />
+
+        <input type="Submit" name="Save" />
+
+        @if (ViewBag.error != null && ViewBag.error)
+        {
+            <p> Usuario invalido</p>
+        }
+
+    </fieldset>
+}
