@@ -1,7 +1,5 @@
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Laboru.WebServices.dll
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Laboru.WebServices.pdb
-C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Laboru.WebServices.dll.CodeAnalysisLog.xml
-C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Laboru.WebServices.dll.lastcodeanalysissucceeded
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Laboru.Business.dll
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Laboru.Models.dll
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Microsoft.Web.Infrastructure.dll

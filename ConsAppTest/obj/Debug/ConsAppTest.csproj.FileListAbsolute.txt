@@ -1,0 +1,5 @@
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\ConsAppTest\bin\Debug\ConsAppTest.exe
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\ConsAppTest\bin\Debug\ConsAppTest.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\ConsAppTest\obj\Debug\ConsAppTest.exe
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\ConsAppTest\obj\Debug\ConsAppTest.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\ConsAppTest\obj\Debug\ConsAppTest.csprojResolveAssemblyReference.cache

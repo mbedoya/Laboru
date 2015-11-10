@@ -89,6 +89,95 @@ namespace Laboru.Data
             return items;
         }
 
+        public static List<ExpertDataModel> GetRecommendationsBySkillAndExpert(int skillID, int expertID, int fromExpertID)
+        {
+            List<ExpertDataModel> items = new List<ExpertDataModel>();
+
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("GetRecommendationsBySkillAndExpert", connection);
+
+            MySqlParameter paramSkillID = new MySqlParameter("pSkillID", skillID);
+            paramSkillID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramSkillID);
+
+            MySqlParameter paramID = new MySqlParameter("pExpertID", expertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            MySqlParameter paramExpert = new MySqlParameter("pFromExpertID", fromExpertID);
+            paramExpert.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramExpert);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+
+            foreach (DataRow row in results.Rows)
+            {
+                ExpertDataModel item = MapItem(row);
+                items.Add(item);
+            }
+
+            return items;
+        }
+
+
+        public static List<ExpertSearchResultDataModel> GetSkills(int expertID, int fromExpertID)
+        {
+            List<ExpertSearchResultDataModel> items = new List<ExpertSearchResultDataModel>();
+
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("GetExpertSkills", connection);
+
+            MySqlParameter paramID = new MySqlParameter("pExpertID", expertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            MySqlParameter paramExpert = new MySqlParameter("pFromExpertID", fromExpertID);
+            paramExpert.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramExpert);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+
+            if (results.Rows.Count > 0)
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    ExpertSearchResultDataModel item = null;
+                    item = new ExpertSearchResultDataModel();
+
+                    if (row["ID"].GetType() != typeof(DBNull))
+                    {
+                        item.ID = Convert.ToInt32(row["ID"]);
+                    }
+                    if (row["Name"].GetType() != typeof(DBNull))
+                    {
+                        item.Name = Convert.ToString(row["Name"]);
+                    }
+                    if (row["Recommendations"].GetType() != typeof(DBNull))
+                    {
+                        item.Recommendations = Convert.ToInt32(row["Recommendations"]);
+                    }
+                    if (row["FriendsRecommendations"].GetType() != typeof(DBNull))
+                    {
+                        item.FriendsRecommendations = Convert.ToInt32(row["FriendsRecommendations"]);
+                    }
+
+                    items.Add(item);
+
+                }
+
+            }
+
+            return items;
+        }
+
         public static void AddContact(int fromExpertID, int expertID)
         {
             List<ExpertSearchResultDataModel> items = new List<ExpertSearchResultDataModel>();

@@ -13,14 +13,19 @@ namespace Laboru.WebServices.Controllers
         //
         // GET: /Expert/
 
-        public JsonResult Get(int id)
+        public JsonResult Get(int id, int fromExpertID)
         {
-            return Json(ExpertBO.GetInstance().Get(id, true), JsonRequestBehavior.AllowGet);
+            return Json(ExpertBO.GetInstance().Get(id, fromExpertID, true), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetBySkillAndExpert(int skillID, int fromExpertID)
         {
             return Json(ExpertBO.GetInstance().GetBySkillAndExpert(skillID, fromExpertID), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetRecommendationsBySkillAndExpert(int skillID, int expertID, int fromExpertID)
+        {
+            return Json(ExpertBO.GetInstance().GetRecommendationsBySkillAndExpert(skillID, expertID, fromExpertID), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Register(Laboru.Models.ExpertDataModel expert)

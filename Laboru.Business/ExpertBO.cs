@@ -51,6 +51,14 @@ namespace Laboru.Business
 			return base.GetAll(id);            
         }
 
+        public ExpertDataModel Get(int id, int fromExpertID, bool useCache = false)
+        {
+            ExpertDataModel expert = base.Get(id, useCache);
+            expert.Skills = ExpertDAL.GetSkills(id, fromExpertID);
+
+            return expert;
+        }
+
 		public override int CreateOrUpdate(ExpertDataModel item)
         {
             item.ID = base.CreateOrUpdate(item);
@@ -85,19 +93,14 @@ namespace Laboru.Business
                     //Remove + and " " chars
                     item.Mobile = FormatMobileNumber(item.Mobile);
 
-                    //System.IO.File.AppendAllText(@"C:\Plenum\Laboru\WebServices\Logs\Errors.txt", "\r\n" + DateTime.Now.ToString() + " " + item.Mobile + " Format Done");
-
                     //Create if it does not exist
                     ExpertDataModel model = ExpertDAL.GetByMobile(item.Mobile);
-                    //System.IO.File.AppendAllText(@"C:\Plenum\Laboru\WebServices\Logs\Errors.txt", "\r\n" + DateTime.Now.ToString() + " Get Done");
                     if (model == null)
                     {
+                        model = item;
                         model.ID = CreateOrUpdate(item);
-                        //System.IO.File.AppendAllText(@"C:\Plenum\Laboru\WebServices\Logs\Errors.txt", "\r\n" + DateTime.Now.ToString() + " Create Done");
                     }
                     ExpertDAL.AddContact(Convert.ToInt32(expert.ID), Convert.ToInt32(model.ID));
-                    //System.IO.File.AppendAllText(@"C:\Plenum\Laboru\WebServices\Logs\Errors.txt", "\r\n" + DateTime.Now.ToString() + " Add Done");
-
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +113,11 @@ namespace Laboru.Business
         public List<ExpertSearchResultDataModel> GetBySkillAndExpert(int skillID, int fromExpertID)
         {
             return ExpertDAL.GetBySkillAndExpert(skillID, fromExpertID);
+        }
+
+        public List<ExpertDataModel> GetRecommendationsBySkillAndExpert(int skillID, int expertID, int fromExpertID)
+        {
+            return ExpertDAL.GetRecommendationsBySkillAndExpert(skillID, expertID, fromExpertID);
         }
 
     }
