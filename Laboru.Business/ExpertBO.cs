@@ -115,9 +115,24 @@ namespace Laboru.Business
             return ExpertDAL.GetBySkillAndExpert(skillID, fromExpertID);
         }
 
+        public List<ExpertSearchResultDataModel> GetRecommendationsByExpert(int expertID, int fromExpertID)
+        {
+            return ExpertDAL.GetRecommendationsByExpert(expertID, fromExpertID);
+        }
+
         public List<ExpertDataModel> GetRecommendationsBySkillAndExpert(int skillID, int expertID, int fromExpertID)
         {
             return ExpertDAL.GetRecommendationsBySkillAndExpert(skillID, expertID, fromExpertID);
+        }
+
+        public void RecommendExpert(int skillID, int expertID, int fromExpertID)
+        {
+            ExpertDAL.RecommendExpert(skillID, expertID, fromExpertID);
+        }
+
+        public void DeleteRecommendation(int skillID, int expertID, int fromExpertID)
+        {
+            ExpertDAL.DeleteRecommendation(skillID, expertID, fromExpertID);
         }
 
     }

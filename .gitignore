@@ -2,6 +2,13 @@
 Thumbs.db
 ehthumbs.db
 
+Laboru.WebServices/bin
+Laboru.WebServices/obj
+Laboru.Business/bin
+Laboru.Data/bin
+Laboru.WebSite/bin
+Laboru.WebSite/obj
+
 # Folder config file
 Desktop.ini
 
