@@ -63,7 +63,44 @@ namespace Laboru.Business
         {
             item.ID = base.CreateOrUpdate(item);
 
+            //Skills sent?
+            if(item.Skills != null && item.Skills.Count > 0){
+
+                //Delete Previous Skills
+                ExpertDAL.DeleteExpertAllSkills(Convert.ToInt32(item.ID));
+
+                foreach (var skillItem in item.Skills)
+                {
+                    AddSkill(Convert.ToInt32(skillItem.ID), Convert.ToInt32(item.ID), Convert.ToInt32(item.ID));
+                }
+            }
+
             return Convert.ToInt32(item.ID);
+        }
+
+        public ExpertDataModel GetByMobile(ExpertDataModel item,int fromExpertID, bool useCache = false)
+        {
+            item.Mobile = FormatMobileNumber(item.Mobile);
+            //Create if it does not exist
+            ExpertDataModel model = ExpertDAL.GetByMobile(item.Mobile);
+            if (model == null)
+            {
+                model = item;
+                model.ID = CreateOrUpdate(item);
+                ExpertDAL.AddContact(fromExpertID, Convert.ToInt32(model.ID));
+            }
+            else
+            {
+                //Add Contact as Friend if not done yet
+                IList<ExpertSearchResultDataModel> contact = ExpertDAL.GetExpertContact(Convert.ToInt32(model.ID), fromExpertID);
+                if (contact == null || contact.Count == 0)
+                {
+                    ExpertDAL.AddContact(fromExpertID, Convert.ToInt32(model.ID));
+                }
+            }
+            model.Skills = ExpertDAL.GetSkills(Convert.ToInt32(model.ID), fromExpertID);
+
+            return model;
         }
 
         public ExpertDataModel Register(ExpertDataModel item)
@@ -76,6 +113,7 @@ namespace Laboru.Business
             {
                 //Set ID so info is updated (Name)
                 item.ID = model.ID;
+                item.DateCreated = DateTime.Now;
             }
 
             item.ID = CreateOrUpdate(item);
@@ -115,9 +153,24 @@ namespace Laboru.Business
             return ExpertDAL.GetBySkillAndExpert(skillID, fromExpertID);
         }
 
+        public List<ExpertSearchResultDataModel> GetAllExpertSkills(int skillID)
+        {
+            return ExpertDAL.GetAllExpertSkills(skillID);
+        }
+
+        public List<ExpertSearchResultDataModel> GetMyRecommendations(int fromExpertID)
+        {
+            return ExpertDAL.GetMyRecommendations(fromExpertID);
+        }
+
         public List<ExpertSearchResultDataModel> GetRecommendationsByExpert(int expertID, int fromExpertID)
         {
             return ExpertDAL.GetRecommendationsByExpert(expertID, fromExpertID);
+        }
+
+        public List<ExpertSearchResultDataModel> GetRecommendationsForExpert(int expertID)
+        {
+            return ExpertDAL.GetRecommendationsForExpert(expertID);
         }
 
         public List<ExpertDataModel> GetRecommendationsBySkillAndExpert(int skillID, int expertID, int fromExpertID)
@@ -128,6 +181,11 @@ namespace Laboru.Business
         public void RecommendExpert(int skillID, int expertID, int fromExpertID)
         {
             ExpertDAL.RecommendExpert(skillID, expertID, fromExpertID);
+        }
+
+        public void AddSkill(int skillID, int expertID, int fromExpertID)
+        {
+            ExpertDAL.AddSkill(skillID, expertID, fromExpertID);
         }
 
         public void DeleteRecommendation(int skillID, int expertID, int fromExpertID)

@@ -165,10 +165,215 @@ namespace Laboru.Data
             return items;
         }
 
+        public static List<ExpertSearchResultDataModel> GetRecommendationsForExpert(int expertID)
+        {
+            List<ExpertSearchResultDataModel> items = new List<ExpertSearchResultDataModel>();
+
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("GetRecommendationsForExpert", connection);
+
+            MySqlParameter paramID = new MySqlParameter("pExpertID", expertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+
+            if (results.Rows.Count > 0)
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    ExpertSearchResultDataModel item = null;
+                    item = new ExpertSearchResultDataModel();
+
+                    if (row["Expert"].GetType() != typeof(DBNull))
+                    {
+                        item.Name = Convert.ToString(row["Expert"]);
+                    }
+
+                    if (row["Date"].GetType() != typeof(DBNull))
+                    {
+                        item.DateCreated = Convert.ToDateTime(row["Date"]);
+                    }
+
+                    if (row["Name"].GetType() != typeof(DBNull))
+                    {
+                        item.Value1 = Convert.ToString(row["Name"]);
+                    }
+
+                    items.Add(item);
+
+                }
+
+            }
+
+            return items;
+        }
+
+        public static List<ExpertSearchResultDataModel> GetExpertContact(int expertID, int fromExpertID)
+        {
+            List<ExpertSearchResultDataModel> items = new List<ExpertSearchResultDataModel>();
+
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("GetExpertContact", connection);
+
+            MySqlParameter paramID = new MySqlParameter("pExpertID", expertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            MySqlParameter paramExpert = new MySqlParameter("pFromExpertID", fromExpertID);
+            paramExpert.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramExpert);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+
+            if (results.Rows.Count > 0)
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    ExpertSearchResultDataModel item = null;
+                    item = new ExpertSearchResultDataModel();
+
+                    if (row["ID"].GetType() != typeof(DBNull))
+                    {
+                        item.ID = Convert.ToInt32(row["ID"]);
+                    }
+
+                    items.Add(item);
+
+                }
+
+            }
+
+            return items;
+        }
+
+        public static List<ExpertSearchResultDataModel> GetAllExpertSkills(int expertID)
+        {
+            List<ExpertSearchResultDataModel> items = new List<ExpertSearchResultDataModel>();
+
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("GetAllExpertSkills", connection);
+
+            MySqlParameter paramID = new MySqlParameter("pExpertID", expertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+
+            if (results.Rows.Count > 0)
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    ExpertSearchResultDataModel item = null;
+                    item = new ExpertSearchResultDataModel();
+
+                    if (row["ID"].GetType() != typeof(DBNull))
+                    {
+                        item.ID = Convert.ToInt32(row["ID"]);
+                    }
+
+                    if (row["Name"].GetType() != typeof(DBNull))
+                    {
+                        item.Name = Convert.ToString(row["Name"]);
+                    }
+
+                    items.Add(item);
+
+                }
+
+            }
+
+            return items;
+        }
+
+        public static List<ExpertSearchResultDataModel> GetMyRecommendations(int fromExpertID)
+        {
+            List<ExpertSearchResultDataModel> items = new List<ExpertSearchResultDataModel>();
+
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("GetMyRecommendations", connection);
+
+            MySqlParameter paramID = new MySqlParameter("pFromExpertID", fromExpertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+
+            if (results.Rows.Count > 0)
+            {
+                foreach (DataRow row in results.Rows)
+                {
+                    ExpertSearchResultDataModel item = null;
+                    item = new ExpertSearchResultDataModel();
+
+                    if (row["ID"].GetType() != typeof(DBNull))
+                    {
+                        item.ID = Convert.ToInt32(row["ID"]);
+                    }
+
+                    if (row["Name"].GetType() != typeof(DBNull))
+                    {
+                        item.Name = Convert.ToString(row["Name"]);
+                    }
+
+                    if (row["Value1"].GetType() != typeof(DBNull))
+                    {
+                        item.Value1 = Convert.ToString(row["Value1"]);
+                    }
+
+                    items.Add(item);
+
+                }
+
+            }
+
+            return items;
+        }
+
         public static void RecommendExpert(int skillID, int expertID, int fromExpertID)
         {
             MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
             MySqlDataAdapter adapter = new MySqlDataAdapter("RecommendExpert", connection);
+
+            MySqlParameter paramSkillID = new MySqlParameter("pSkillID", skillID);
+            paramSkillID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramSkillID);
+
+            MySqlParameter paramID = new MySqlParameter("pExpertID", expertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            MySqlParameter paramExpert = new MySqlParameter("pFromExpertID", fromExpertID);
+            paramExpert.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramExpert);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+        }
+
+        public static void AddSkill(int skillID, int expertID, int fromExpertID)
+        {
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("AddSkill", connection);
 
             MySqlParameter paramSkillID = new MySqlParameter("pSkillID", skillID);
             paramSkillID.Direction = ParameterDirection.Input;
@@ -299,6 +504,25 @@ namespace Laboru.Data
             MySqlDataAdapter adapter = new MySqlDataAdapter("DeleteExpertContacts", connection);
 
             MySqlParameter paramID = new MySqlParameter("pExpertID", fromExpertID);
+            paramID.Direction = ParameterDirection.Input;
+            adapter.SelectCommand.Parameters.Add(paramID);
+
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+            DataTable results = new DataTable();
+
+            adapter.Fill(results);
+
+        }
+
+        public static void DeleteExpertAllSkills(int fromExpertID)
+        {
+            List<ExpertSearchResultDataModel> items = new List<ExpertSearchResultDataModel>();
+
+            MySqlConnection connection = new MySqlConnection(ConfigurationManager.AppSettings[Plenum.Data.Constants.AppSetting]);
+            MySqlDataAdapter adapter = new MySqlDataAdapter("DeleteExpertAllSkill", connection);
+
+            MySqlParameter paramID = new MySqlParameter("pID", fromExpertID);
             paramID.Direction = ParameterDirection.Input;
             adapter.SelectCommand.Parameters.Add(paramID);
 

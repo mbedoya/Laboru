@@ -51,7 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseExpertDAL.cs" />
+    <Compile Include="BasePostDAL.cs" />
     <Compile Include="ExpertDAL.cs" />
+    <Compile Include="PostDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillDAL.cs" />
   </ItemGroup>

@@ -9,7 +9,9 @@ namespace Laboru.Models
     {
         public int? ID { get; set; }
         public string Name { get; set; }
+        public DateTime DateCreated { get; set; }
         public int? Recommendations { get; set; }
         public int? FriendsRecommendations { get; set; }
+        public string Value1 { get; set; }
     }
 }

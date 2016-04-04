@@ -23,7 +23,22 @@ namespace Laboru.Business
 
         public List<SkillDataModel> GetAll(int id = 0)
         {
-            return SkillDAL.GetAll();
+            List<SkillDataModel> list = null;
+
+            /*
+            Plenum.Utilities.Cache.CacheManager cache = Plenum.Utilities.Cache.CacheManager.GetInstance();
+
+            list = cache.GetObject<SkillDataModel>("Skills");
+
+            if (list == null){
+                list = SkillDAL.GetAll();
+                cache.AddObject("Skills", list);
+            }
+             */
+
+            list = SkillDAL.GetAll();
+
+            return list;
         }
     }
 }

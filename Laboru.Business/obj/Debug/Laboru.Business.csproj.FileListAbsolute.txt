@@ -8,3 +8,5 @@ C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bi
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\obj\Debug\Laboru.Business.csprojResolveAssemblyReference.cache
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\obj\Debug\Laboru.Business.dll
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\obj\Debug\Laboru.Business.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Debug\Plenum.Utilities.dll
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.Business\bin\Debug\Ionic.Zip.dll

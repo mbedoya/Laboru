@@ -57,3 +57,4 @@ C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\WebSite\bin\Laboru
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\WebSite\bin\Laboru.Business.pdb
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\WebSite\bin\Laboru.Models.pdb
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\WebSite\bin\Laboru.Data.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\WebSite\bin\Ionic.Zip.dll

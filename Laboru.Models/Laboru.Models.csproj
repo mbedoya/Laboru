@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ExpertDataModel.cs" />
     <Compile Include="ExpertSearchResultDataModel.cs" />
+    <Compile Include="PostDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillDataModel.cs" />
   </ItemGroup>

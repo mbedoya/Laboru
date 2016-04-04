@@ -33,6 +33,9 @@
     <Reference Include="Plenum.Models">
       <HintPath>..\Lib\Plenum.Models.dll</HintPath>
     </Reference>
+    <Reference Include="Plenum.Utilities">
+      <HintPath>..\..\PetFriend\Lib\Plenum.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,7 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseExpertBO.cs" />
+    <Compile Include="BasePostBO.cs" />
     <Compile Include="ExpertBO.cs" />
+    <Compile Include="PostBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkillBO.cs" />
   </ItemGroup>

@@ -49,3 +49,4 @@ C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\obj\Debug\Laboru.WebServices.csprojResolveAssemblyReference.cache
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\obj\Debug\Laboru.WebServices.dll
 C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\obj\Debug\Laboru.WebServices.pdb
+C:\Users\USUARIO\documents\visual studio 2012\Projects\Laboru\Laboru.WebServices\bin\Ionic.Zip.dll

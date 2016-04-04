@@ -37,6 +37,10 @@ namespace Laboru.Data
 			{
 				item.Bio = Convert.ToString(row["Bio"]);
 			}
+            if (row.Table.Columns.Contains("DateCreated") && row["DateCreated"].GetType() != typeof(DBNull))
+            {
+                item.DateCreated = Convert.ToDateTime(row["DateCreated"]);
+            }
 			
 			return item;
 		}

@@ -12,6 +12,7 @@ namespace Laboru.Models
 		public string  LastName { get; set; }
 		public string  Mobile { get; set; }
 		public string  Bio { get; set; }
+        public DateTime DateCreated { get; set; }
 
         public List<ExpertSearchResultDataModel> Skills { get; set; }
     }    
